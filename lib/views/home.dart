@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:astropills_tools/services/moon.service.dart';
+import 'package:astropills_tools/services/weather.service.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -9,8 +10,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void loadWeatherData() async {
+    bool isLoaded = await WeatherService.loadForecast();
+    if (isLoaded) {
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
+    loadWeatherData();
     super.initState();
   }
 
@@ -30,42 +39,49 @@ class _HomeState extends State<Home> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Image(
-                        image: AssetImage(MoonService.getLunarPhaseImage()),
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Image(
+                          image: AssetImage(MoonService.getLunarPhaseImage()),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 30),
-                  Expanded(flex: 1, child: Center(child: Text('Weather Icon')))
-                ]
-              ),
+                    SizedBox(width: 30),
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                            child:
+                                Image.network(WeatherService.getCurrentIcon())))
+                  ]),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text(
-                        'Illuminazione: ${MoonService.getLunarIllumination()}%',
-                        style: TextStyle(
-                          color: Colors.amberAccent,
-                          fontWeight: FontWeight.bold
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: Text(
+                          'ILLUMINAZIONE: ${MoonService.getLunarIllumination()}%',
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 30),
-                  Expanded(flex: 1, child: Center(child: Text('Weather Text')))
-                ]
-              ),
+                    SizedBox(width: 30),
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: Text(WeatherService.getCurrentDescription(),
+                                style: TextStyle(
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.bold))))
+                  ]),
             ),
           ],
         ),

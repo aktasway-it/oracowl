@@ -1,7 +1,7 @@
 class MoonService {
   static const double _LUNAR_CYCLE = 29.53058770576;
 
-  static const List phases = [
+  static const List _phases = [
     ['new', 0, 1],
     ['waxing_crescent', 1, 6.38264692644],
     ['first_quarter', 6.38264692644, 8.38264692644],
@@ -21,7 +21,6 @@ class MoonService {
     double lunarSecs = _LUNAR_CYCLE * 60 * 60 * 24;
     double secondsInCurrentCycle = timeDiff % lunarSecs;
     double currentPhasePercent = secondsInCurrentCycle / lunarSecs;
-    double currentPhase = currentPhasePercent * _LUNAR_CYCLE;
     return currentPhasePercent;
   }
 
@@ -41,9 +40,9 @@ class MoonService {
   static String getLunarPhaseImage() {
     double lunarDay = getLunarDay();
     print(getLunarIllumination());
-    for (int i = 0; i < phases.length; i++) {
-      if (lunarDay >= phases[i][1] && lunarDay <= phases[i][2]) {
-        return 'assets/icons/moon/${phases[i][0]}.png';
+    for (int i = 0; i < _phases.length; i++) {
+      if (lunarDay >= _phases[i][1] && lunarDay <= _phases[i][2]) {
+        return 'assets/icons/moon/${_phases[i][0]}.png';
       }
     }
     return '';
