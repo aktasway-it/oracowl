@@ -1,6 +1,8 @@
+import 'package:astropills_tools/services/location.service.dart';
 import 'package:flutter/material.dart';
 import 'package:astropills_tools/services/moon.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -10,8 +12,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void loadWeatherData() async {
-    bool isLoaded = await WeatherService.loadForecast();
+  MoonService _moonService = MoonService();
+  WeatherService _weatherService = WeatherService();
+  LocationService _locationService = LocationService();
+
+  void loadData() async {
+    Position? location = await _locationService.getCurrentLocation();
+    if (location == null) {
+      return;
+    }
+    bool isLoaded = await _weatherService.loadForecast(location.latitude, location.longitude);
     if (isLoaded) {
       setState(() {});
     }
@@ -19,7 +29,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    loadWeatherData();
+    loadData();
     super.initState();
   }
 
@@ -45,7 +55,7 @@ class _HomeState extends State<Home> {
                       flex: 1,
                       child: Center(
                         child: Image(
-                          image: AssetImage(MoonService.getLunarPhaseImage()),
+                          image: AssetImage(_moonService.getLunarPhaseImage()),
                         ),
                       ),
                     ),
@@ -54,7 +64,7 @@ class _HomeState extends State<Home> {
                         flex: 1,
                         child: Center(
                             child:
-                                Image.network(WeatherService.getCurrentIcon())))
+                                Image.network(_weatherService.getCurrentIcon())))
                   ]),
             ),
             Padding(
@@ -66,7 +76,7 @@ class _HomeState extends State<Home> {
                       flex: 1,
                       child: Center(
                         child: Text(
-                          'ILLUMINAZIONE: ${MoonService.getLunarIllumination()}%',
+                          'ILLUMINAZIONE: ${_moonService.getLunarIllumination()}%',
                           style: TextStyle(
                               color: Colors.white70,
                               fontWeight: FontWeight.bold),
@@ -77,7 +87,7 @@ class _HomeState extends State<Home> {
                     Expanded(
                         flex: 1,
                         child: Center(
-                            child: Text(WeatherService.getCurrentDescription(),
+                            child: Text(_weatherService.getCurrentDescription(),
                                 style: TextStyle(
                                     color: Colors.white70,
                                     fontWeight: FontWeight.bold))))

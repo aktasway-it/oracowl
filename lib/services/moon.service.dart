@@ -1,7 +1,10 @@
 class MoonService {
-  static const double _LUNAR_CYCLE = 29.53058770576;
+  static final MoonService _singleton = MoonService._internal();
+  factory MoonService() => _singleton;
+  MoonService._internal();
 
-  static const List _phases = [
+  final double _lunarCycle = 29.53058770576;
+  final List _phases = [
     ['new', 0, 1],
     ['waxing_crescent', 1, 6.38264692644],
     ['first_quarter', 6.38264692644, 8.38264692644],
@@ -13,23 +16,23 @@ class MoonService {
     ['new', 28.53058770576, 29.53058770576],
   ];
 
-  static double getLunarPhasePercent() {
+  double getLunarPhasePercent() {
     DateTime now = DateTime.now();
     now = DateTime(now.year, now.month, now.day, 22);
     DateTime firstFullMoon = DateTime(2000, 1, 6, 18, 14);
     double timeDiff = (now.millisecondsSinceEpoch - firstFullMoon.millisecondsSinceEpoch) / 1000;
-    double lunarSecs = _LUNAR_CYCLE * 60 * 60 * 24;
+    double lunarSecs = this._lunarCycle * 60 * 60 * 24;
     double secondsInCurrentCycle = timeDiff % lunarSecs;
     double currentPhasePercent = secondsInCurrentCycle / lunarSecs;
     return currentPhasePercent;
   }
 
-  static double getLunarDay() {
-    return getLunarPhasePercent() * _LUNAR_CYCLE;
+  double getLunarDay() {
+    return this.getLunarPhasePercent() * this._lunarCycle;
   }
 
-  static int getLunarIllumination() {
-    double phasePercent = getLunarPhasePercent();
+  int getLunarIllumination() {
+    double phasePercent = this.getLunarPhasePercent();
     if (phasePercent <= 0.5) {
       return (phasePercent / 0.5 * 100).round();
     } else {
@@ -37,12 +40,11 @@ class MoonService {
     }
   }
 
-  static String getLunarPhaseImage() {
-    double lunarDay = getLunarDay();
-    print(getLunarIllumination());
-    for (int i = 0; i < _phases.length; i++) {
-      if (lunarDay >= _phases[i][1] && lunarDay <= _phases[i][2]) {
-        return 'assets/icons/moon/${_phases[i][0]}.png';
+  String getLunarPhaseImage() {
+    double lunarDay = this.getLunarDay();
+    for (int i = 0; i < this._phases.length; i++) {
+      if (lunarDay >= this._phases[i][1] && lunarDay <= this._phases[i][2]) {
+        return 'assets/icons/moon/${this._phases[i][0]}.png';
       }
     }
     return '';

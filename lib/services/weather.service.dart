@@ -2,31 +2,40 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class WeatherService {
-  static Map _forecast = Map();
-  static loadForecast() async {
+  static final WeatherService _singleton = WeatherService._internal();
+
+  factory WeatherService() => _singleton;
+
+  WeatherService._internal();
+
+  Map _forecast = Map();
+
+  Future<bool> loadForecast(double latitude, double longitude) async {
     if (_forecast.isEmpty) {
-      Response response = await get(Uri.parse("https://api.openweathermap.org/data/2.5/forecast?lat=42.2265&lon=14.3890&appId=0bfbfead5d22a5123b78b6a46bcbde97&lang=it"));
+      String requestURI = 'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appId=0bfbfead5d22a5123b78b6a46bcbde97&lang=it';
+      Response response = await get(Uri.parse(requestURI));
+      print(requestURI);
       print(response.body);
-      _forecast = jsonDecode(response.body);
+      this._forecast = jsonDecode(response.body);
     }
-    return isForecastLoaded();
+    return this.isForecastLoaded();
   }
 
-  static bool isForecastLoaded() {
-    return _forecast.isNotEmpty && _forecast['cod'] == '200';
+  bool isForecastLoaded() {
+    return this._forecast.isNotEmpty && this._forecast['cod'] == '200';
   }
 
-  static String getCurrentIcon() {
-    if (!isForecastLoaded()) {
+  String getCurrentIcon() {
+    if (!this.isForecastLoaded()) {
       return 'https://openweathermap.org/img/wn/01n@2x.png';
     }
-    return 'https://openweathermap.org/img/wn/${_forecast['list'][0]['weather'][0]['icon']}@2x.png';
+    return 'https://openweathermap.org/img/wn/${this._forecast['list'][0]['weather'][0]['icon']}@2x.png';
   }
 
-  static String getCurrentDescription() {
-    if (!isForecastLoaded()) {
+  String getCurrentDescription() {
+    if (!this.isForecastLoaded()) {
       return 'LOADING';
     }
-    return _forecast['list'][0]['weather'][0]['description'].toUpperCase();
+    return this._forecast['list'][0]['weather'][0]['description'].toUpperCase();
   }
 }
