@@ -1,41 +1,32 @@
+import 'package:astropills_tools/models/weather.data.dart';
 import 'package:http/http.dart';
-import 'dart:convert';
 
 class WeatherService {
   static final WeatherService _singleton = WeatherService._internal();
-
   factory WeatherService() => _singleton;
-
   WeatherService._internal();
 
-  Map _forecast = Map();
+  WeatherData _data = WeatherData.empty;
 
   Future<bool> loadForecast(double latitude, double longitude) async {
-    if (_forecast.isEmpty) {
+    if (!isDataLoaded()) {
       String requestURI = 'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appId=0bfbfead5d22a5123b78b6a46bcbde97&lang=it';
       Response response = await get(Uri.parse(requestURI));
       print(requestURI);
       print(response.body);
-      this._forecast = jsonDecode(response.body);
+      this._data = WeatherData.parseJSONFeed(response.body);
     }
-    return this.isForecastLoaded();
+    return this.isDataLoaded();
   }
 
-  bool isForecastLoaded() {
-    return this._forecast.isNotEmpty && this._forecast['cod'] == '200';
+  bool isDataLoaded() {
+    return this._data.loaded;
   }
 
-  String getCurrentIcon() {
-    if (!this.isForecastLoaded()) {
-      return 'https://openweathermap.org/img/wn/01n@2x.png';
+  ForecastData getCurrentForecast() {
+    if (!this.isDataLoaded()) {
+      return ForecastData.empty;
     }
-    return 'https://openweathermap.org/img/wn/${this._forecast['list'][0]['weather'][0]['icon']}@2x.png';
-  }
-
-  String getCurrentDescription() {
-    if (!this.isForecastLoaded()) {
-      return 'LOADING';
-    }
-    return this._forecast['list'][0]['weather'][0]['description'].toUpperCase();
+    return this._data.forecast[0];
   }
 }

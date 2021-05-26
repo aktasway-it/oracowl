@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                         flex: 1,
                         child: Center(
                             child:
-                                Image.network(_weatherService.getCurrentIcon())))
+                                Image.network(_weatherService.getCurrentForecast().icon)))
                   ]),
             ),
             Padding(
@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
                     Expanded(
                         flex: 1,
                         child: Center(
-                            child: Text(_weatherService.getCurrentDescription(),
+                            child: Text(_weatherService.getCurrentForecast().description.toUpperCase(),
                                 style: TextStyle(
                                     color: Colors.white70,
                                     fontWeight: FontWeight.bold))))
