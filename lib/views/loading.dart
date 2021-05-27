@@ -1,8 +1,10 @@
+import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:astropills_tools/services/moon.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   const Loading();
@@ -36,12 +38,14 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      backgroundColor: ThemeColors.primaryColorDark,
+      body: Container(
         child: Center(
-          child: Text(
-            'Loading...'
+          child: SpinKitRotatingCircle(
+            color: ThemeColors.interactiveColor,
+            size: 50.0,
           ),
-        )
+        ),
       )
     );
   }
