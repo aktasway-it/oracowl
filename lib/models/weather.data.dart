@@ -4,6 +4,7 @@ import 'package:astropills_tools/core/config.dart';
 class WeatherData {
   Map _data = Map();
 
+  WeatherData.empty();
   WeatherData(String jsonData) {
     try {
       this._data = jsonDecode(jsonData);

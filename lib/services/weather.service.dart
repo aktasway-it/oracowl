@@ -6,7 +6,7 @@ class WeatherService {
   factory WeatherService() => _singleton;
   WeatherService._internal();
 
-  WeatherData _data = WeatherData('');
+  WeatherData _data = WeatherData.empty();
 
   Future<void> loadForecast(double latitude, double longitude) async {
     if (!isDataLoaded()) {

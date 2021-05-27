@@ -19,9 +19,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeColors.primaryColorDark,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, '/');
+        },
+        backgroundColor: ThemeColors.interactiveColor,
+        child: Icon(
+          Icons.refresh
+        ),
+      ),
       body: SafeArea(
-        child: Container(
-          color: Colors.grey[900],
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
             child: Column(children: [
@@ -34,9 +42,9 @@ class _HomeState extends State<Home> {
                       children: [
                         Text(_weatherService.weather.location,
                             style: TextStyle(
-                              fontSize: 32,
+                              fontSize: 48,
                               fontWeight: FontWeight.bold,
-                              color: ThemeColors.primaryColor,
+                              color: ThemeColors.textColor,
                             )),
                         Text(
                           'FOO',
@@ -63,8 +71,7 @@ class _HomeState extends State<Home> {
               )
             ]),
           ),
-        ),
-      ),
+      )
     );
   }
 }
