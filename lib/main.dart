@@ -5,8 +5,8 @@ import 'package:astropills_tools/views/loading.dart';
 void main() {
   runApp(MaterialApp(
     routes: {
-      '/': (context) => Home(),
-      '/load': (context) => Loading(),
+      '/': (context) => Loading(),
+      '/home': (context) => Home(),
     },
   ));
 }

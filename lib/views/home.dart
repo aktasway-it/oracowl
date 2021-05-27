@@ -1,8 +1,8 @@
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:flutter/material.dart';
+import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/moon.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
-import 'package:geolocator/geolocator.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -16,84 +16,53 @@ class _HomeState extends State<Home> {
   WeatherService _weatherService = WeatherService();
   LocationService _locationService = LocationService();
 
-  void loadData() async {
-    Position? location = await _locationService.getCurrentLocation();
-    if (location == null) {
-      return;
-    }
-    bool isLoaded = await _weatherService.loadForecast(location.latitude, location.longitude);
-    if (isLoaded) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    loadData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('AstroPills Tools'),
-        centerTitle: true,
-        backgroundColor: Colors.grey[900],
-      ),
-      body: Container(
-        color: Colors.grey[850],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: SafeArea(
+        child: Container(
+          color: Colors.grey[900],
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
+            child: Column(children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Image(
-                          image: AssetImage(_moonService.getLunarPhaseImage()),
-                        ),
-                      ),
+                    Column(
+                      children: [
+                        Text(_weatherService.weather.location,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: ThemeColors.primaryColor,
+                            )),
+                        Text(
+                          'FOO',
+                          style: TextStyle(color: ThemeColors.secondaryColor),
+                        )
+                      ],
                     ),
-                    SizedBox(width: 30),
-                    Expanded(
-                        flex: 1,
-                        child: Center(
-                            child:
-                                Image.network(_weatherService.getCurrentForecast().icon)))
-                  ]),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
                       flex: 1,
-                      child: Center(
-                        child: Text(
-                          'ILLUMINAZIONE: ${_moonService.getLunarIllumination()}%',
-                          style: TextStyle(
-                              color: Colors.white70,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 30),
-                    Expanded(
-                        flex: 1,
-                        child: Center(
-                            child: Text(_weatherService.getCurrentForecast().description.toUpperCase(),
-                                style: TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.bold))))
-                  ]),
-            ),
-          ],
+                      child: Image.asset(
+                        _moonService.getLunarPhaseImage()
+                      )),
+                  Expanded(
+                      flex: 1,
+                      child: Image.network(
+                          _weatherService.weather.currentWeatherIcon))
+                ],
+              )
+            ]),
+          ),
         ),
       ),
     );

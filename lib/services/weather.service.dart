@@ -6,27 +6,23 @@ class WeatherService {
   factory WeatherService() => _singleton;
   WeatherService._internal();
 
-  WeatherData _data = WeatherData.empty;
+  WeatherData _data = WeatherData('');
 
-  Future<bool> loadForecast(double latitude, double longitude) async {
+  Future<void> loadForecast(double latitude, double longitude) async {
     if (!isDataLoaded()) {
-      String requestURI = 'https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appId=0bfbfead5d22a5123b78b6a46bcbde97&lang=it';
+      String requestURI = 'http://api.weatherapi.com/v1/forecast.json?key=0f8b0d0a304f460fbbb72025212705&q=$latitude,$longitude';
       Response response = await get(Uri.parse(requestURI));
       print(requestURI);
       print(response.body);
-      this._data = WeatherData.parseJSONFeed(response.body);
+      this._data = WeatherData(response.body);
     }
-    return this.isDataLoaded();
   }
 
   bool isDataLoaded() {
     return this._data.loaded;
   }
 
-  ForecastData getCurrentForecast() {
-    if (!this.isDataLoaded()) {
-      return ForecastData.empty;
-    }
-    return this._data.forecast[0];
+  WeatherData get weather {
+    return this._data;
   }
 }

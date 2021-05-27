@@ -5,18 +5,18 @@ class LocationService {
   factory LocationService() => _singleton;
   LocationService._internal();
 
-  bool _locationAvailable = false;
+  Position? _currentLocation;
 
   Future<Position?> getCurrentLocation() async {
-    if (!_locationAvailable) {
+    if (this._currentLocation == null) {
       LocationPermission permission = await Geolocator.requestPermission();
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         return null;
       }
-      Position location = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-      print(location.toString());
-      return location;
+      this._currentLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      print(this._currentLocation.toString());
     }
+    return _currentLocation;
   }
 }
