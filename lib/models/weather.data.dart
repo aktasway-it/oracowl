@@ -56,6 +56,19 @@ class WeatherData {
     return _data['current']['is_day'] == 1;
   }
 
+  Map get today {
+    if (!loaded) {
+      return {
+        'max_temp_c': '0',
+        'min_temp_c': '0',
+        'daily_chance_of_rain': '0',
+        'totalprecip_mm': '0',
+        'maxwind_kph': '0'
+      };
+    }
+    return _data['forecast']['forecastday'][0]['day'];
+  }
+
   Map get astronomy {
     if (!loaded) {
       return {
