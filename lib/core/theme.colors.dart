@@ -9,4 +9,6 @@ class ThemeColors {
   static const interactiveColorDark = Color(0xff870200);
   static const textColor = Color(0xffffffff);
   static const textColorDark = Color(0xff8e8e8d);
+  static const blackColor = Color(0xff1c1c1c);
+  static const blackColorDark = Color(0xff101010);
 }

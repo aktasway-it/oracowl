@@ -7,7 +7,7 @@ class LocationService {
 
   Position? _currentLocation;
 
-  Future<Position?> getCurrentLocation() async {
+  Future<Position?> fetchCurrentLocation() async {
     if (this._currentLocation == null) {
       LocationPermission permission = await Geolocator.requestPermission();
       permission = await Geolocator.checkPermission();
@@ -18,5 +18,19 @@ class LocationService {
       print(this._currentLocation.toString());
     }
     return _currentLocation;
+  }
+
+  String get locationAsString {
+    if (_currentLocation == null) {
+      return 'N/A';
+    }
+    return '${_currentLocation!.latitude}, ${_currentLocation!.longitude}';
+  }
+
+  int get altitude {
+    if (_currentLocation == null) {
+      return 0;
+    }
+    return _currentLocation!.altitude.round();
   }
 }

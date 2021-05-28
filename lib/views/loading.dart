@@ -1,6 +1,5 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
-import 'package:astropills_tools/services/moon.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,12 +13,11 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  MoonService _moonService = MoonService();
   WeatherService _weatherService = WeatherService();
   LocationService _locationService = LocationService();
 
   void loadData() async {
-    Position? location = await _locationService.getCurrentLocation();
+    Position? location = await _locationService.fetchCurrentLocation();
     if (location == null) {
       return;
     }
