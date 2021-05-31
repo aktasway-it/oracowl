@@ -69,17 +69,27 @@ class WeatherData {
     return _data['forecast']['forecastday'][0]['day'];
   }
 
-  List<Map> get forecastHourly {
+  List<Map> _getForecastHourly(int dayIndex) {
     if (!loaded) {
       return [];
     }
     List<Map> forecastHourlyList = [];
-    for (int i = 0; i < _data['forecast']['forecastday'].length; i++) {
-      for (int j = 0; j < _data['forecast']['forecastday'][i]['hour'].length; j++) {
-        forecastHourlyList.add(_data['forecast']['forecastday'][i]['hour'][j]);
-      }
+    for (int j = 0; j < _data['forecast']['forecastday'][dayIndex]['hour'].length; j++) {
+      forecastHourlyList.add(_data['forecast']['forecastday'][dayIndex]['hour'][j]);
     }
     return forecastHourlyList;
+  }
+
+  List<Map> get forecastTodayHourly {
+    return _getForecastHourly(0);
+  }
+
+  List<Map> get forecastTomorrowHourly {
+    return _getForecastHourly(1);
+  }
+
+  List<Map> get forecastAfterTomorrowHourly {
+    return _getForecastHourly(2);
   }
 
   Map get astronomy {
