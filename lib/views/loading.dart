@@ -17,11 +17,11 @@ class _LoadingState extends State<Loading> {
   LocationService _locationService = LocationService();
 
   void loadData() async {
-    Position? location = await _locationService.fetchCurrentLocation();
+    Position? location = await _locationService.fetchCurrentLocation(forceReload: true);
     if (location == null) {
       return;
     }
-    await _weatherService.loadForecast(location.latitude, location.longitude);
+    await _weatherService.loadForecast(location.latitude, location.longitude, forceReload: true);
     if (_weatherService.isDataLoaded()) {
       Navigator.pushReplacementNamed(context, '/home');
     }
@@ -39,7 +39,7 @@ class _LoadingState extends State<Loading> {
       backgroundColor: ThemeColors.primaryColorDark,
       body: Container(
         child: Center(
-          child: SpinKitRotatingCircle(
+          child: SpinKitFoldingCube(
             color: ThemeColors.interactiveColor,
             size: 50.0,
           ),

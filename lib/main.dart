@@ -1,3 +1,4 @@
+import 'package:astropills_tools/views/forecast.dart';
 import 'package:flutter/material.dart';
 import 'package:astropills_tools/views/home.dart';
 import 'package:astropills_tools/views/loading.dart';
@@ -8,6 +9,7 @@ void main() {
     routes: {
       '/': (context) => Loading(),
       '/home': (context) => Home(),
+      '/forecast': (context) => Forecast(),
     },
   ));
 }

@@ -7,8 +7,8 @@ class LocationService {
 
   Position? _currentLocation;
 
-  Future<Position?> fetchCurrentLocation() async {
-    if (this._currentLocation == null) {
+  Future<Position?> fetchCurrentLocation({forceReload = false}) async {
+    if (this._currentLocation == null || forceReload) {
       LocationPermission permission = await Geolocator.requestPermission();
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {

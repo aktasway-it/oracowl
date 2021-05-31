@@ -71,7 +71,12 @@ class _HomeState extends State<Home> {
                             )),
                       ],
                     ),
-                    Image.network(_weatherService.weather.currentWeatherIcon),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/forecast');
+                      },
+                      child: Image.network(_weatherService.weather.currentWeatherIcon)
+                    ),
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(_weatherService.weather.currentWeatherText,
@@ -87,106 +92,153 @@ class _HomeState extends State<Home> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Row(
-                            children: [
-                              Image.asset(_weatherService
-                                  .weather.astronomy['moon_icon']),
-                              SizedBox(width: 5),
-                              Column(
-                                children: [
-                                  Text(
-                                    '${_weatherService.weather.astronomy['moon_phase']} (${_weatherService.weather.astronomy['moon_illumination']}%)',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: ThemeColors.textColor,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Row(
+                              children: [
+                                Image.asset(_weatherService
+                                    .weather.astronomy['moon_icon']),
+                                SizedBox(width: 5),
+                                Column(
+                                  children: [
+                                    Text(
+                                      '${_weatherService.weather.astronomy['moon_phase']}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: ThemeColors.textColor,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        _weatherService
-                                            .weather.astronomy['moonrise'],
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                    Text(
+                                      'Illuminazione: ${_weatherService.weather.astronomy['moon_illumination']}%',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: ThemeColors.textColor,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          _weatherService
+                                              .weather.astronomy['moonrise'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.secondaryColor,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.upgrade,
                                           color: ThemeColors.secondaryColor,
+                                          size: 18,
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.upgrade,
-                                        color: ThemeColors.secondaryColor,
-                                        size: 18,
-                                      ),
-                                      Icon(
-                                        Icons.vertical_align_bottom,
-                                        color: ThemeColors.primaryColorDark,
-                                        size: 18,
-                                      ),
-                                      Text(
-                                        _weatherService
-                                            .weather.astronomy['moonset'],
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                        Icon(
+                                          Icons.vertical_align_bottom,
                                           color: ThemeColors.primaryColorDark,
+                                          size: 18,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
+                                        Text(
+                                          _weatherService
+                                              .weather.astronomy['moonset'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.primaryColorDark,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Row(
-                            children: [
-                              Image.asset(_weatherService
-                                  .weather.astronomy['moon_icon']),
-                              SizedBox(width: 5),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Min: ${_weatherService.weather.today['mintemp_c']}° - Max: ${_weatherService.weather.today['maxtemp_c']}°',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: ThemeColors.textColor,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.nights_stay,
+                                  color: ThemeColors.textColor,
+                                  size: 35,
+                                ),
+                                SizedBox(width: 5),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Min: ${_weatherService.weather.today['mintemp_c']}° - Max: ${_weatherService.weather.today['maxtemp_c']}°',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: ThemeColors.textColor,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        _weatherService
-                                            .weather.astronomy['sunrise'],
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '${_weatherService.weather.today['totalprecip_mm']} mm (${_weatherService.weather.today['daily_chance_of_rain']}%)',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.secondaryColor,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.umbrella,
                                           color: ThemeColors.secondaryColor,
+                                          size: 18,
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.wb_sunny,
-                                        color: ThemeColors.secondaryColor,
-                                        size: 18,
-                                      ),
-                                      Icon(
-                                        Icons.nightlight_round,
-                                        color: ThemeColors.primaryColorDark,
-                                        size: 18,
-                                      ),
-                                      Text(
-                                        _weatherService
-                                            .weather.astronomy['sunset'],
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                        SizedBox(width: 5),
+                                        Icon(
+                                          Icons.air,
                                           color: ThemeColors.primaryColorDark,
+                                          size: 18,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
+                                        Text(
+                                          '${_weatherService.weather.today['maxwind_kph']} km/h',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.primaryColorDark,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          _weatherService
+                                              .weather.astronomy['sunrise'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.secondaryColor,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.wb_sunny,
+                                          color: ThemeColors.secondaryColor,
+                                          size: 18,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Icon(
+                                          Icons.nightlight_round,
+                                          color: ThemeColors.primaryColorDark,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          _weatherService
+                                              .weather.astronomy['sunset'],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: ThemeColors.primaryColorDark,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],
