@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   void initState() {
     Intl.defaultLocale = 'it_IT';
     initializeDateFormatting('it_IT', null).then((value) {
-      _timeString = _formatDateTime(DateTime.now());
+      _getTime();
       _timer = Timer.periodic(Duration(seconds: 60), (Timer t) => _getTime());
     });
 
@@ -43,12 +43,6 @@ class _HomeState extends State<Home> {
         title: Text(''),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(Icons.menu, size: 30, color: ThemeColors.textColor),
-          onPressed: () {
-
-          },
-        ),
         actions: [
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -62,6 +56,37 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                child: Container(
+                  child: Column(
+                    children: [
+                      Image.asset('assets/icons/oracowl.png'),
+                      Text(
+                        'ORACOWL',
+                        style: TextStyle(fontSize: 24, color: ThemeColors.textColor),
+                      )
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        ThemeColors.primaryColor, ThemeColors.secondaryColor
+                      ]
+                  ),
+                )
+            ),
+            ListTile(
+              title: Text('About'),
+              leading: Icon(Icons.info),
+              onTap: () {},
+            )
+          ],
+        ),
       ),
       body: Container(
         child: Stack(
@@ -97,8 +122,7 @@ class _HomeState extends State<Home> {
                             Text(
                               _timeString,
                               style: TextStyle(
-                                fontSize: 14,
-                                  color: ThemeColors.textColor),
+                                  fontSize: 14, color: ThemeColors.textColor),
                             )
                           ],
                         ),
@@ -109,30 +133,25 @@ class _HomeState extends State<Home> {
                               height: 128,
                               width: 128,
                               decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(_weatherService
-                                      .weather.astronomy['moon_icon']
-                                  ),
-                                  fit: BoxFit.fill
-                                )
-                              ),
+                                  image: DecorationImage(
+                                      image: AssetImage(_weatherService
+                                          .weather.astronomy['moon_icon']),
+                                      fit: BoxFit.fill)),
                               child: Center(
                                 child: Text(
-                                  '${_weatherService.weather.astronomy['moon_illumination']}%',
-                                  style: TextStyle(
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.bold,
-                                    color: ThemeColors.interactiveColor,
-                                  )
-                                ),
+                                    '${_weatherService.weather.astronomy['moon_illumination']}%',
+                                    style: TextStyle(
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.bold,
+                                      color: ThemeColors.interactiveColor,
+                                    )),
                               ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  _weatherService
-                                      .weather.astronomy['moonrise'],
+                                  _weatherService.weather.astronomy['moonrise'],
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: ThemeColors.textColor,
@@ -149,8 +168,7 @@ class _HomeState extends State<Home> {
                                   size: 16,
                                 ),
                                 Text(
-                                  _weatherService
-                                      .weather.astronomy['moonset'],
+                                  _weatherService.weather.astronomy['moonset'],
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: ThemeColors.textColorDark,
@@ -170,24 +188,21 @@ class _HomeState extends State<Home> {
                                   fontWeight: FontWeight.bold,
                                   color: ThemeColors.textColor),
                             ),
-                            Row(
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/forecast');
-                                    },
-                                    child: CachedNetworkImage(
-                                        imageUrl: 'https:${_weatherService.weather.currentWeather['condition']['icon']}')
-                                ),
-                                Text(
-                                  _weatherService.weather.currentWeather['condition']['text'],
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: ThemeColors.textColor
-                                  ),
-                                )
-                              ]
-                            )
+                            Row(children: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/forecast');
+                                  },
+                                  child: CachedNetworkImage(
+                                      imageUrl:
+                                          'https:${_weatherService.weather.currentWeather['condition']['icon']}')),
+                              Text(
+                                _weatherService.weather
+                                    .currentWeather['condition']['text'],
+                                style: TextStyle(
+                                    fontSize: 14, color: ThemeColors.textColor),
+                              )
+                            ])
                           ],
                         ),
                       ],
@@ -197,7 +212,8 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         margin: EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(border: Border.all(color: Colors.white38)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white38)),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -214,9 +230,7 @@ class _HomeState extends State<Home> {
                                   '${_weatherService.weather.currentWeather['cloud']} %',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: ThemeColors.textColor
-                                  )
-                              )
+                                      color: ThemeColors.textColor))
                             ],
                           ),
                           Column(
@@ -230,16 +244,12 @@ class _HomeState extends State<Home> {
                                   '${_weatherService.weather.currentWeather['chance_of_rain']} %',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: ThemeColors.textColor
-                                  )
-                              ),
+                                      color: ThemeColors.textColor)),
                               Text(
                                   '${_weatherService.weather.currentWeather['precip_mm']} mm',
                                   style: TextStyle(
                                       fontSize: 10,
-                                      color: ThemeColors.textColor
-                                  )
-                              ),
+                                      color: ThemeColors.textColor)),
                             ],
                           ),
                           Column(
@@ -253,16 +263,12 @@ class _HomeState extends State<Home> {
                                   '${_weatherService.weather.currentWeather['wind_kph']} km/h',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: ThemeColors.textColor
-                                  )
-                              ),
+                                      color: ThemeColors.textColor)),
                               Text(
                                   '${_weatherService.weather.currentWeather['wind_dir']}',
                                   style: TextStyle(
                                       fontSize: 10,
-                                      color: ThemeColors.textColor
-                                  )
-                              )
+                                      color: ThemeColors.textColor))
                             ],
                           ),
                           Column(
@@ -276,9 +282,7 @@ class _HomeState extends State<Home> {
                                   '${_weatherService.weather.currentWeather['humidity']} %',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: ThemeColors.textColor
-                                  )
-                              )
+                                      color: ThemeColors.textColor))
                             ],
                           )
                         ],

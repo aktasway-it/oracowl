@@ -2,21 +2,31 @@ import 'package:geolocator/geolocator.dart';
 
 class LocationService {
   static final LocationService _singleton = LocationService._internal();
+
   factory LocationService() => _singleton;
+
   LocationService._internal();
 
-  Position? _currentLocation;
+  late Position _currentLocation;
 
-  Future<Position?> fetchCurrentLocation({forceReload = false}) async {
-    if (this._currentLocation == null || forceReload) {
+  Future<bool> fetchCurrentLocation() async {
+    try {
       LocationPermission permission = await Geolocator.requestPermission();
       permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-        return null;
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        return false;
       }
-      this._currentLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      this._currentLocation = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
       print(this._currentLocation.toString());
+    } catch (ex) {
+      return false;
     }
+    return true;
+  }
+
+  Position get position {
     return _currentLocation;
   }
 
@@ -24,13 +34,13 @@ class LocationService {
     if (_currentLocation == null) {
       return 'N/A';
     }
-    return '${_currentLocation!.latitude}, ${_currentLocation!.longitude}';
+    return '${_currentLocation.latitude}, ${_currentLocation.longitude}';
   }
 
   int get altitude {
     if (_currentLocation == null) {
       return 0;
     }
-    return _currentLocation!.altitude.round();
+    return _currentLocation.altitude.round();
   }
 }

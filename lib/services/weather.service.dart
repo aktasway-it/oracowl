@@ -8,14 +8,19 @@ class WeatherService {
 
   WeatherData _data = WeatherData.empty();
 
-  Future<void> loadForecast(double latitude, double longitude, {forceReload = false}) async {
-    if (!isDataLoaded() || forceReload) {
-      String requestURI = 'https://api.weatherapi.com/v1/forecast.json?key=0f8b0d0a304f460fbbb72025212705&q=$latitude,$longitude&days=3&lang=it';
-      Response response = await get(Uri.parse(requestURI));
-      print(requestURI);
-      print(response.body);
-      this._data = WeatherData(response.body);
+  Future<bool> loadForecast(double latitude, double longitude, {forceReload = false}) async {
+    try {
+      if (!isDataLoaded() || forceReload) {
+        String requestURI = 'https://api.weatherapi.com/v1/forecast.json?key=0f8b0d0a304f460fbbb72025212705&q=$latitude,$longitude&days=3&lang=it';
+        Response response = await get(Uri.parse(requestURI));
+        print(requestURI);
+        print(response.body);
+        this._data = WeatherData(response.body);
+      }
+    } catch (ex) {
+      return false;
     }
+    return isDataLoaded();
   }
 
   bool isDataLoaded() {

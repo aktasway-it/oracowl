@@ -7,14 +7,19 @@ class OracowlService {
   OracowlService._internal();
 
   OracowlData _data = OracowlData.empty();
-  Future<void> loadData(double latitude, double longitude, {forceReload = false}) async {
-    if (!isDataLoaded() || forceReload) {
-      String requestURI = 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude';
-      Response response = await get(Uri.parse(requestURI));
-      print(requestURI);
-      print(response.body);
-      this._data = OracowlData(response.body);
+  Future<bool> loadData(double latitude, double longitude, {forceReload = false}) async {
+    try {
+      if (!isDataLoaded() || forceReload) {
+        String requestURI = 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude';
+        Response response = await get(Uri.parse(requestURI));
+        print(requestURI);
+        print(response.body);
+        this._data = OracowlData(response.body);
+      }
+    } catch (ex) {
+      return false;
     }
+    return isDataLoaded();
   }
 
   List get tonight {
