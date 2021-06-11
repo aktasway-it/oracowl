@@ -19,6 +19,7 @@ class _ForecastState extends State<Forecast> {
         appBar: AppBar(
           title: Text('${_weatherService.weather.location}'),
           centerTitle: true,
+          backgroundColor: ThemeColors.primaryColor,
         ),
         body: DefaultTabController(
           length: 3,

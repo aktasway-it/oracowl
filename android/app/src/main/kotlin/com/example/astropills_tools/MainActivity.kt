@@ -1,4 +1,4 @@
-package com.example.astropills_tools
+package it.astropills.oracowl
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,10 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ForecastHour extends StatelessWidget {
   final Map _weatherData;
+
   const ForecastHour(this._weatherData);
 
   @override
@@ -19,8 +21,7 @@ class ForecastHour extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(_weatherData['condition']
-                  ['text']),
+              Text(_weatherData['condition']['text']),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -79,7 +80,8 @@ class ForecastHour extends StatelessWidget {
           ),
           leading: CircleAvatar(
               radius: 20,
-              backgroundImage: NetworkImage(
+              backgroundColor: Colors.transparent,
+              backgroundImage: CachedNetworkImageProvider(
                   'https:${_weatherData['condition']['icon']}'))),
     );
   }

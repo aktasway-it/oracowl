@@ -32,6 +32,7 @@ dependencies:
   geolocator: ^7.0.3
   intl: ^0.17.0
   flutter_spinkit: ^5.0.0
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/backgrounds/
+    - assets/icons/
     - assets/icons/moon/
 
   # An image asset can refer to one or more resolution-specific "variants", see

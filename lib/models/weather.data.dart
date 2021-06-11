@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:astropills_tools/core/config.dart';
 
 class WeatherData {
   final Map _moonPhaseIcons = {
@@ -35,18 +34,12 @@ class WeatherData {
     return _data['location']['name'];
   }
 
-  String get currentWeatherText {
+  Map get currentWeather {
     if (!loaded) {
-      return 'Loading...';
+      return Map();
     }
-    return _data['current']['condition']['text'];
-  }
-
-  String get currentWeatherIcon {
-    if (!loaded) {
-      return 'https://cdn.weatherapi.com/weather/128x128/day/116.png';
-    }
-    return 'https:' + _data['current']['condition']['icon'].replaceAll('64x64', '128x128');
+    DateTime now = DateTime.now();
+    return _data['forecast']['forecastday'][0]['hour'][now.hour - 1];
   }
 
   bool get isDay {
