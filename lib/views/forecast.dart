@@ -1,5 +1,6 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/weather.service.dart';
+import 'package:astropills_tools/views/drawer.menu.dart';
 import 'package:astropills_tools/views/forecast.hour.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class _ForecastState extends State<Forecast> {
           centerTitle: true,
           backgroundColor: ThemeColors.primaryColor,
         ),
+        drawer: DrawerMenu(),
         body: DefaultTabController(
           length: 3,
           child: Column(
@@ -45,13 +47,13 @@ class _ForecastState extends State<Forecast> {
                             }
                       ),
                       ListView.builder(
-                          itemCount: _weatherService.weather.forecastTodayHourly.length,
+                          itemCount: _weatherService.weather.forecastTomorrowHourly.length,
                           itemBuilder: (context, index) {
                             return ForecastHour(_weatherService.weather.forecastTomorrowHourly[index]);
                           }
                       ),
                       ListView.builder(
-                          itemCount: _weatherService.weather.forecastTodayHourly.length,
+                          itemCount: _weatherService.weather.forecastAfterTomorrowHourly.length,
                           itemBuilder: (context, index) {
                             return ForecastHour(_weatherService.weather.forecastAfterTomorrowHourly[index]);
                           }

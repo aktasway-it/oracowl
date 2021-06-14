@@ -74,7 +74,9 @@ class WeatherData {
   }
 
   List<Map> get forecastTodayHourly {
-    return _getForecastHourly(0);
+    DateTime now = DateTime.now();
+    int hourIndex = now.hour;
+    return _getForecastHourly(0).sublist(hourIndex);
   }
 
   List<Map> get forecastTomorrowHourly {

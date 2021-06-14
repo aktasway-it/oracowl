@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:astropills_tools/services/oracowl.service.dart';
+import 'package:astropills_tools/views/drawer.menu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:astropills_tools/core/theme.colors.dart';
@@ -48,7 +49,7 @@ class _HomeState extends State<Home> {
             margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushReplacementNamed(context, '/');
               },
               child: Icon(
                 Icons.refresh,
@@ -57,37 +58,7 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Image.asset('assets/icons/oracowl.png'),
-                      Text(
-                        'ORACOWL',
-                        style: TextStyle(fontSize: 24, color: ThemeColors.textColor),
-                      )
-                    ],
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        ThemeColors.primaryColor, ThemeColors.secondaryColor
-                      ]
-                  ),
-                )
-            ),
-            ListTile(
-              title: Text('About'),
-              leading: Icon(Icons.info),
-              onTap: () {},
-            )
-          ],
-        ),
-      ),
+      drawer: DrawerMenu(),
       body: Container(
         child: Stack(
           children: [
@@ -191,7 +162,7 @@ class _HomeState extends State<Home> {
                             Row(children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/forecast');
+                                    Navigator.pushReplacementNamed(context, '/forecast');
                                   },
                                   child: CachedNetworkImage(
                                       imageUrl:

@@ -22,6 +22,10 @@ class OracowlService {
     return isDataLoaded();
   }
 
+  Map get polaris {
+    return _data.polaris;
+  }
+
   List get tonight {
     return _data.tonight;
   }
