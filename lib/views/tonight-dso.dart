@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 import 'drawer.menu.dart';
 
 class TonightDSO extends StatelessWidget {
@@ -48,7 +47,7 @@ class TonightDSO extends StatelessWidget {
                                 image: DecorationImage(
                                   fit: BoxFit.cover,  //I assumed you want to occupy the entire space of the card
                                   image: CachedNetworkImageProvider(
-                                    'https://api.oracowl.io/data/thumbs/${_oracowlService.tonightDSO[index]['alias']}.jpg',
+                                    _oracowlService.tonightDSO[index]['image_url'],
                                   ),
                                 ),
                               ),

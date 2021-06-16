@@ -30,6 +30,10 @@ class OracowlService {
     return _data.tonightDSO;
   }
 
+  List get tonightPlanets {
+    return _data.tonightPlanets;
+  }
+
   bool isDataLoaded() {
     return this._data.loaded;
   }

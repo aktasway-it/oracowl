@@ -61,7 +61,7 @@ class DrawerMenu extends StatelessWidget {
             title: Text('Pianeti'),
             leading: Icon(Icons.hdr_strong),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/polar');
+              Navigator.pushReplacementNamed(context, '/tonight/planets');
             },
           )
         ],

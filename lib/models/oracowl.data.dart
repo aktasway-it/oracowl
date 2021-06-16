@@ -16,6 +16,10 @@ class OracowlData {
     return _data['dso'];
   }
 
+  List get tonightPlanets {
+    return _data['planets'];
+  }
+
   bool get loaded {
     return _data.isNotEmpty;
   }
