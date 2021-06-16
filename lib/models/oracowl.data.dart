@@ -12,9 +12,8 @@ class OracowlData {
     return _data['polaris'];
   }
 
-  List get tonight {
-    _data['dso'].sort((a, b) => a['magnitude'] <= b['magnitude']);
-    return _data['dso'].sublist(0, 3);
+  List get tonightDSO {
+    return _data['dso'];
   }
 
   bool get loaded {

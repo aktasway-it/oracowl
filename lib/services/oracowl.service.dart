@@ -26,8 +26,8 @@ class OracowlService {
     return _data.polaris;
   }
 
-  List get tonight {
-    return _data.tonight;
+  List get tonightDSO {
+    return _data.tonightDSO;
   }
 
   bool isDataLoaded() {

@@ -49,6 +49,20 @@ class DrawerMenu extends StatelessWidget {
             onTap: () {
               Navigator.pushReplacementNamed(context, '/polar');
             },
+          ),
+          ListTile(
+            title: Text('Profondo Cielo'),
+            leading: Icon(Icons.auto_awesome),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/tonight/dso');
+            },
+          ),
+          ListTile(
+            title: Text('Pianeti'),
+            leading: Icon(Icons.hdr_strong),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/polar');
+            },
           )
         ],
       ),

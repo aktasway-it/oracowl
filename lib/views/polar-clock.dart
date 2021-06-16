@@ -14,6 +14,7 @@ class PolarClock extends StatefulWidget {
 
 class _PolarClockState extends State<PolarClock> {
   OracowlService _oracowlService = OracowlService();
+
   double _dotX = 0;
   double _dotY = 0;
 
@@ -50,7 +51,7 @@ class _PolarClockState extends State<PolarClock> {
                     padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
                     child: Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Stack(
                             children: [
@@ -108,6 +109,24 @@ class _PolarClockState extends State<PolarClock> {
                               ),
                             ],
                           ),
+                          Divider(
+                            height: 10, color: ThemeColors.primaryColorDark,
+                          ),
+                          FittedBox(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Guarda il tutorial!',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: ThemeColors.interactiveColor
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
