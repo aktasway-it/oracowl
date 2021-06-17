@@ -97,54 +97,89 @@ class _HomeState extends State<Home> {
                             )
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              height: 128,
-                              width: 128,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(_weatherService
-                                          .weather.astronomy['moon_icon']),
-                                      fit: BoxFit.fill)),
-                              child: Center(
-                                child: Text(
-                                    '${_weatherService.weather.astronomy['moon_illumination']}%',
-                                    style: TextStyle(
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
-                                      color: ThemeColors.interactiveColor,
-                                    )),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  _weatherService.weather.astronomy['moonrise'],
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: ThemeColors.textColor,
+                                Container(
+                                  height: 128,
+                                  width: 128,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(_weatherService
+                                              .weather.astronomy['moon_icon']),
+                                          fit: BoxFit.fill)),
+                                  child: Center(
+                                    child: Text(
+                                        '${_weatherService.weather.astronomy['moon_illumination']}%',
+                                        style: TextStyle(
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.interactiveColor,
+                                        )),
                                   ),
                                 ),
-                                Icon(
-                                  Icons.upgrade,
-                                  color: ThemeColors.textColor,
-                                  size: 16,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      _weatherService.weather.astronomy['moonrise'],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: ThemeColors.textColor,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.upgrade,
+                                      color: ThemeColors.textColor,
+                                      size: 20,
+                                    ),
+                                    Icon(
+                                      Icons.vertical_align_bottom,
+                                      color: ThemeColors.textColorDark,
+                                      size: 20,
+                                    ),
+                                    Text(
+                                      _weatherService.weather.astronomy['moonset'],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: ThemeColors.textColorDark,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Icon(
-                                  Icons.vertical_align_bottom,
-                                  color: ThemeColors.textColorDark,
-                                  size: 16,
-                                ),
-                                Text(
-                                  _weatherService.weather.astronomy['moonset'],
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: ThemeColors.textColorDark,
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  height: 128,
+                                  width: 128,
+                                  child: Center(
+                                    child: Text(
+                                        _weatherService.weather.tonightRank,
+                                        style: TextStyle(
+                                          fontSize: 64,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.interactiveColor,
+                                        )),
                                   ),
-                                )
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Owl Rank',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: ThemeColors.textColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],

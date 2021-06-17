@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'dart:math';
+
 class WeatherData {
   final Map _moonPhaseIcons = {
     'New Moon': 'assets/icons/moon/new.png',
@@ -85,6 +87,56 @@ class WeatherData {
 
   List<Map> get forecastAfterTomorrowHourly {
     return _getForecastHourly(2);
+  }
+
+  String get tonightRank {
+    double avgClouds = 0;
+    double avgWind = 0;
+    double avgHumidity = 0;
+    int moonIllumination = int.parse(astronomy['moon_illumination']);
+    if (moonIllumination >= 80) {
+      return 'E';
+    }
+    for (int i = 20; i < forecastTodayHourly.length; i++) {
+      if (forecastTodayHourly[i]['chance_of_rain'] > 30) {
+        return 'E';
+      }
+      avgClouds += forecastTodayHourly[i]['cloud'];
+      avgWind += forecastTodayHourly[i]['wind_kph'];
+      avgHumidity += forecastTodayHourly[i]['humidity'];
+    }
+    for (int i = 0; i < 6; i++) {
+      if (int.parse(forecastTodayHourly[i]['chance_of_rain']) > 30) {
+        return 'E';
+      }
+      avgClouds += forecastTodayHourly[i]['cloud'];
+      avgWind += forecastTodayHourly[i]['wind_kph'];
+      avgHumidity += forecastTodayHourly[i]['humidity'];
+    }
+
+    avgClouds /= 10;
+    avgWind /= 10;
+    avgHumidity /= 10;
+
+    int moonScore = ((100 - moonIllumination) * 0.4).round();
+    int cloudsScore = ((100 - avgClouds) * 0.3).round();
+    int windScore = (max((20 - avgWind), 0) * 0.2).round();
+    int humidityScore = ((100 - avgHumidity) * 0.1).round();
+    print('M: $moonScore, C: $cloudsScore, W: $windScore, H: $humidityScore');
+    int totalScore = moonScore + cloudsScore + windScore + humidityScore;
+    if (totalScore > 90) {
+      return 'A';
+    } else if (totalScore > 70) {
+      return 'B';
+    } else if (totalScore > 50) {
+      return 'C';
+    } else if (totalScore > 30) {
+      return 'D';
+    } else if (totalScore > 70) {
+      return 'E';
+    }
+
+    return 'N/A';
   }
 
   Map get astronomy {

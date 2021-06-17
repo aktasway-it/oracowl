@@ -37,6 +37,13 @@ class DrawerMenu extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text('Scegli località'),
+            leading: Icon(Icons.location_on),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/location');
+            },
+          ),
+          ListTile(
             title: Text('Meteo'),
             leading: Icon(Icons.wb_sunny),
             onTap: () {
