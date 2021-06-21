@@ -106,12 +106,12 @@ class WeatherData {
       avgHumidity += forecastTodayHourly[i]['humidity'];
     }
     for (int i = 0; i < 6; i++) {
-      if (int.parse(forecastTodayHourly[i]['chance_of_rain']) > 30) {
+      if (int.parse(forecastTomorrowHourly[i]['chance_of_rain']) > 30) {
         return 'E';
       }
-      avgClouds += forecastTodayHourly[i]['cloud'];
-      avgWind += forecastTodayHourly[i]['wind_kph'];
-      avgHumidity += forecastTodayHourly[i]['humidity'];
+      avgClouds += forecastTomorrowHourly[i]['cloud'];
+      avgWind += forecastTomorrowHourly[i]['wind_kph'];
+      avgHumidity += forecastTomorrowHourly[i]['humidity'];
     }
 
     avgClouds /= 10;

@@ -60,7 +60,7 @@ class TonightDSO extends StatelessWidget {
                               title: Text(
                                   '${_oracowlService.tonightDSO[index]['familiar_name']}',
                                 style: TextStyle(
-                                  color: ThemeColors.interactiveColor
+                                  color: ThemeColors.primaryColor
                                 ),
                               ),
                               content: FittedBox(
@@ -121,14 +121,28 @@ class TonightDSO extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text('Chiudi')),
+                                    child: Text(
+                                        'Chiudi',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: ThemeColors.textColor
+                                      ),
+                                    )
+                                ),
                                 TextButton(
                                     onPressed: () {
                                       _openTelescopiusURL(
                                           _oracowlService.tonightDSO[index]
                                               ['telescopius_url']);
                                     },
-                                    child: Text('Apri in Telescopius'))
+                                    child: Text(
+                                        'Apri in Telescopius',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: ThemeColors.interactiveColor
+                                      ),
+                                    )
+                                )
                               ],
                             );
                             showDialog(

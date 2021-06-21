@@ -18,8 +18,12 @@ class _LoadingState extends State<Loading> {
   OracowlService _oracowlService = OracowlService();
   WeatherService _weatherService = WeatherService();
   LocationService _locationService = LocationService();
+  bool _showReload = false;
 
   void loadData() async {
+    setState(() {
+      _showReload = false;
+    });
     bool positionLoaded =
         await _locationService.fetchCurrentLocation();
     if (!positionLoaded) {
@@ -47,6 +51,9 @@ class _LoadingState extends State<Loading> {
         textColor: ThemeColors.textColor,
         fontSize: 16.0
     );
+    setState(() {
+      _showReload = true;
+    });
   }
 
   @override
@@ -74,10 +81,22 @@ class _LoadingState extends State<Loading> {
                     color: ThemeColors.textColor
                   )
                 ),
-                SpinKitRipple(
+                !_showReload ? SpinKitRipple(
                   color: ThemeColors.textColor,
                   size: 50.0,
-                ),
+                ) : TextButton(
+                    onPressed: () {
+                      loadData();
+                    },
+                    child: Text(
+                        'Ricarica',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: ThemeColors.interactiveColor
+                        )
+                    )
+                )
               ],
             ),
           ),
