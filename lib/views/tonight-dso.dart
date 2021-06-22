@@ -56,7 +56,7 @@ class TonightDSO extends StatelessWidget {
                         child: ListTile(
                           onTap: () {
                             AlertDialog alert = AlertDialog(
-                              backgroundColor: ThemeColors.secondaryColor,
+                              backgroundColor: ThemeColors.secondaryColorDark,
                               title: Text(
                                   '${_oracowlService.tonightDSO[index]['familiar_name']}',
                                 style: TextStyle(

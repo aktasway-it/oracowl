@@ -1,5 +1,6 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu();
@@ -70,9 +71,33 @@ class DrawerMenu extends StatelessWidget {
             onTap: () {
               Navigator.pushReplacementNamed(context, '/tonight/planets');
             },
+          ),
+          ListTile(
+            title: Text('Tutorials'),
+            leading: Icon(Icons.ondemand_video),
+            onTap: () {
+              _openYoutubeURL();
+            },
+          ),
+          ListTile(
+            title: Text('Invia un feedback'),
+            leading: Icon(Icons.email),
+            onTap: () {
+              _openFeedbackURL();
+            },
           )
         ],
       ),
     );
+  }
+
+  void _openYoutubeURL() async {
+    final url = 'https://www.youtube.com/c/AstroPills';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  void _openFeedbackURL() async {
+    final url = 'mailto:astropills.it@gmail.com?subject=Feedback Oracowl';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }

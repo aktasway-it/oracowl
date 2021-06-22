@@ -12,10 +12,10 @@ class ForecastHour extends StatelessWidget {
     return Card(
       child: ListTile(
           title: Text(
-            _weatherData['time'],
+            '${_weatherData['time'].split(' ')[1]}',
             style: TextStyle(
               fontSize: 14,
-              color: ThemeColors.blackColorDark,
+              color: ThemeColors.blackColor,
             ),
           ),
           subtitle: Column(
@@ -78,11 +78,24 @@ class ForecastHour extends StatelessWidget {
               )
             ],
           ),
-          leading: CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.transparent,
-              backgroundImage: CachedNetworkImageProvider(
-                  'https:${_weatherData['condition']['icon']}'))),
+          leading: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: CachedNetworkImageProvider(
+                      'https:${_weatherData['condition']['icon']}')
+              ),
+              Text(
+                '${_weatherData['temp_c']}° C',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: ThemeColors.blackColor,
+                )
+              )
+            ],
+          )),
     );
   }
 }

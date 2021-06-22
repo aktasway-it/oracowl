@@ -3,6 +3,7 @@ import 'package:astropills_tools/services/weather.service.dart';
 import 'package:astropills_tools/views/drawer.menu.dart';
 import 'package:astropills_tools/views/forecast.hour.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Forecast extends StatefulWidget {
   const Forecast();
@@ -20,7 +21,7 @@ class _ForecastState extends State<Forecast> {
         appBar: AppBar(
           title: Text('${_weatherService.weather.location}'),
           centerTitle: true,
-          backgroundColor: ThemeColors.primaryColor,
+          backgroundColor: ThemeColors.secondaryColor,
         ),
         drawer: DrawerMenu(),
         body: DefaultTabController(
@@ -29,11 +30,11 @@ class _ForecastState extends State<Forecast> {
             children: [
               Container(
                 child: TabBar(
-                  labelColor: ThemeColors.primaryColor,
+                  labelColor: ThemeColors.secondaryColor,
                   tabs: [
-                    Tab(text: 'Oggi'),
-                    Tab(text: 'Domani'),
-                    Tab(text: 'Dopodomani')
+                    Tab(text: _getTodayString()),
+                    Tab(text: _getTomorrowString()),
+                    Tab(text: _getAfterTomorrowString())
                   ]
                 ),
               ),
@@ -65,5 +66,17 @@ class _ForecastState extends State<Forecast> {
           )
         )
     );
+  }
+
+  String _getTodayString() {
+    return DateFormat('EEEE d').format(DateTime.now());
+  }
+
+  String _getTomorrowString() {
+    return DateFormat('EEEE d').format(DateTime.now().add(Duration(days: 1)));
+  }
+
+  String _getAfterTomorrowString() {
+    return DateFormat('EEEE d').format(DateTime.now().add(Duration(days: 2)));
   }
 }
