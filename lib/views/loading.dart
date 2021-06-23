@@ -27,7 +27,8 @@ class _LoadingState extends State<Loading> {
     bool positionLoaded =
         await _locationService.fetchCurrentLocation();
     if (!positionLoaded) {
-      showErrorToast();
+      showLocationToast();
+      Navigator.pushReplacementNamed(context, '/location');
       return;
     }
     bool oracowlLoaded = await _oracowlService.loadData(_locationService.position.latitude, _locationService.position.longitude,
@@ -41,9 +42,24 @@ class _LoadingState extends State<Loading> {
     }
   }
 
+  showLocationToast() {
+    Fluttertoast.showToast(
+        msg: "Oracowl ha bisogno di poter accedere alla tua posizione per caricare automaticamente i dati.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ThemeColors.secondaryColor,
+        textColor: ThemeColors.textColor,
+        fontSize: 16.0
+    );
+    setState(() {
+      _showReload = true;
+    });
+  }
+
   showErrorToast() {
     Fluttertoast.showToast(
-        msg: "Network not available, please try again.",
+        msg: "Impossibile stabilire una connessione, riprova.",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,

@@ -17,6 +17,7 @@ class OracowlService {
         this._data = OracowlData(response.body);
       }
     } catch (ex) {
+      print(ex.toString());
       return false;
     }
     return isDataLoaded();

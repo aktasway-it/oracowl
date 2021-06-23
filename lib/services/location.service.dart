@@ -29,6 +29,15 @@ class LocationService {
     return true;
   }
 
+  Future<bool> hasPermission() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    return permission != LocationPermission.denied && permission != LocationPermission.deniedForever;
+  }
+
+  void openSettings() {
+    Geolocator.openLocationSettings();
+  }
+
   Position get position {
     return _currentLocation;
   }

@@ -18,6 +18,7 @@ class WeatherService {
         this._data = WeatherData(response.body);
       }
     } catch (ex) {
+      print(ex.toString());
       return false;
     }
     return isDataLoaded();

@@ -2,6 +2,7 @@ import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'drawer.menu.dart';
 
@@ -25,7 +26,6 @@ class _LocationPickerState extends State<LocationPicker> {
             elevation: 0,
             centerTitle: true,
             backgroundColor: ThemeColors.secondaryColor),
-        drawer: DrawerMenu(),
         body: Container(
             child: Stack(children: [
           Image.asset('assets/backgrounds/night.jpg',
@@ -62,13 +62,25 @@ class _LocationPickerState extends State<LocationPicker> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            final latitude = double.parse(_formKey
-                                .currentState!.fields['latitude']!.value);
-                            final longitude = double.parse(_formKey
-                                .currentState!.fields['longitude']!.value);
-                            _locationService.createPositionFromLatLon(
-                                latitude, longitude);
-                            Navigator.pushReplacementNamed(context, '/');
+                            try {
+                              final latitude = double.parse(_formKey
+                                  .currentState!.fields['latitude']!.value);
+                              final longitude = double.parse(_formKey
+                                  .currentState!.fields['longitude']!.value);
+                              _locationService.createPositionFromLatLon(
+                                  latitude, longitude);
+                              Navigator.pushReplacementNamed(context, '/');
+                            } catch(ex) {
+                              Fluttertoast.showToast(
+                                  msg: "Inserisci dei valori di latitudine e longitudine validi.",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: ThemeColors.secondaryColor,
+                                  textColor: ThemeColors.textColor,
+                                  fontSize: 16.0
+                              );
+                            }
                           },
                           child: Row(
                             children: [
@@ -81,9 +93,14 @@ class _LocationPickerState extends State<LocationPicker> {
                             ],
                           )),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             _locationService.flushPosition();
-                            Navigator.pushReplacementNamed(context, '/');
+                            bool hasPermission = await _locationService.hasPermission();
+                            if (hasPermission) {
+                              Navigator.pushReplacementNamed(context, '/');
+                            } else {
+                              _locationService.openSettings();
+                            }
                           },
                           child: Row(
                             children: [
