@@ -115,36 +115,44 @@ class _HomeState extends State<Home> {
                                     child: Text(
                                         '${_weatherService.weather.astronomy['moon_illumination']}%',
                                         style: TextStyle(
-                                          fontSize: 36,
+                                          fontSize: 48,
                                           fontWeight: FontWeight.bold,
-                                          color: ThemeColors.interactiveColor,
+                                          color: ThemeColors.textColor,
+                                          shadows: [
+                                            Shadow(
+                                              offset: Offset(3.0, 3.0),
+                                              blurRadius: 3.0,
+                                              color: Color.fromARGB(32, 0, 0, 0),
+                                            ),
+                                          ]
                                         )),
                                   ),
                                 ),
+                                SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       _weatherService.weather.astronomy['moonrise'],
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: ThemeColors.textColor,
                                       ),
                                     ),
                                     Icon(
                                       Icons.upgrade,
                                       color: ThemeColors.textColor,
-                                      size: 20,
+                                      size: 18,
                                     ),
                                     Icon(
                                       Icons.vertical_align_bottom,
                                       color: ThemeColors.textColorDark,
-                                      size: 20,
+                                      size: 18,
                                     ),
                                     Text(
                                       _weatherService.weather.astronomy['moonset'],
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: ThemeColors.textColorDark,
                                       ),
                                     )
@@ -158,23 +166,35 @@ class _HomeState extends State<Home> {
                                 Container(
                                   height: 128,
                                   width: 128,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage('assets/icons/owlrank.png'),
+                                          fit: BoxFit.fill)),
                                   child: Center(
                                     child: Text(
                                         _weatherService.weather.tonightRank,
                                         style: TextStyle(
-                                          fontSize: 64,
+                                          fontSize: 60,
                                           fontWeight: FontWeight.bold,
-                                          color: ThemeColors.interactiveColor,
+                                          color: ThemeColors.textColor,
+                                            shadows: [
+                                              Shadow(
+                                                offset: Offset(3.0, 3.0),
+                                                blurRadius: 3.0,
+                                                color: Color.fromARGB(64, 0, 0, 0),
+                                              ),
+                                            ]
                                         )),
                                   ),
                                 ),
+                                SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       'Owl Rank',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: ThemeColors.textColor,
                                       ),
                                     ),

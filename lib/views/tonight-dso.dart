@@ -41,7 +41,7 @@ class TonightDSO extends StatelessWidget {
                     ),
                     margin: EdgeInsets.all(10),
                     child: Container(
-                      height: 100,
+                      height: 105,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
@@ -168,7 +168,7 @@ class TonightDSO extends StatelessWidget {
                                     color: ThemeColors.interactiveColor,
                                     fontSize: 10),
                               ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 35),
                               Divider(height: 10, color: ThemeColors.textColor),
                               Row(
                                 mainAxisAlignment:
