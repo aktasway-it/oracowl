@@ -34,6 +34,77 @@ class TonightPlanets extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
+                      onTap: () {
+                        AlertDialog alert = AlertDialog(
+                          backgroundColor: ThemeColors.secondaryColorDark,
+                          title: Text(
+                            _oracowlService.tonightPlanets[index]['name'],
+                            style: TextStyle(
+                                color: ThemeColors.primaryColor,
+                                fontSize: 24
+                            ),
+                          ),
+                          content: FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
+                                SizedBox(height: 20),
+                                Text(
+                                  'Distanza dalla terra: ${_oracowlService.tonightPlanets[index]['earth_distance']} UA',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: ThemeColors.textColor
+                                  ),
+                                ),
+                                Text(
+                                  'Sorge: ${_oracowlService.tonightPlanets[index]['rise_time']}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: ThemeColors.textColor
+                                  ),
+                                ),
+                                Text(
+                                  'Tramonta: ${_oracowlService.tonightPlanets[index]['set_time']}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: ThemeColors.textColor
+                                  ),
+                                ),
+                                Text(
+                                  'Massima altezza: ${_oracowlService.tonightPlanets[index]['max_altitude']}° (${_oracowlService.tonightPlanets[index]['max_altitude_time']})',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: ThemeColors.textColor
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'Chiudi',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: ThemeColors.textColor
+                                  ),
+                                )
+                            )
+                          ],
+                        );
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alert;
+                          },
+                        );
+                      },
                       title: Text(
                           _oracowlService.tonightPlanets[index]['name'],
                         style: TextStyle(

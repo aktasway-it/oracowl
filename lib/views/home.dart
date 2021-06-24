@@ -174,7 +174,7 @@ class _HomeState extends State<Home> {
                                     child: Text(
                                         _weatherService.weather.tonightRank,
                                         style: TextStyle(
-                                          fontSize: 60,
+                                          fontSize: 48,
                                           fontWeight: FontWeight.bold,
                                           color: ThemeColors.textColor,
                                             shadows: [
@@ -222,11 +222,12 @@ class _HomeState extends State<Home> {
                                   child: CachedNetworkImage(
                                       imageUrl:
                                           'https:${_weatherService.weather.currentWeather['condition']['icon']}')),
-                              Text(
-                                _weatherService.weather
-                                    .currentWeather['condition']['text'],
-                                style: TextStyle(
-                                    fontSize: 14, color: ThemeColors.textColor),
+                              Flexible(
+                                child: Text(
+                                  _weatherService.weather.currentWeather['condition']['text'],
+                                  style: TextStyle(
+                                      fontSize: 14, color: ThemeColors.textColor),
+                                ),
                               )
                             ])
                           ],

@@ -108,24 +108,6 @@ class _PolarClockState extends State<PolarClock> {
                                 ],
                               ),
                             ],
-                          ),
-                          Divider(
-                            height: 10, color: ThemeColors.primaryColorDark,
-                          ),
-                          FittedBox(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Guarda il tutorial!',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: ThemeColors.interactiveColor
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                              ],
-                            ),
                           )
                         ],
                       ),

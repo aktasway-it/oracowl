@@ -156,11 +156,13 @@ class TonightDSO extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                '${_oracowlService.tonightDSO[index]['familiar_name']} (${_oracowlService.tonightDSO[index]['alias'].replaceAll('-', ' ')})',
-                                style: TextStyle(
-                                    color: ThemeColors.textColor, fontSize: 14),
-                                textAlign: TextAlign.end,
+                              FittedBox(
+                                child: Text(
+                                  '${_oracowlService.tonightDSO[index]['familiar_name']} (${_oracowlService.tonightDSO[index]['alias'].replaceAll('-', ' ')})',
+                                  style: TextStyle(
+                                      color: ThemeColors.textColor, fontSize: 14),
+                                  textAlign: TextAlign.end,
+                                ),
                               ),
                               Text(
                                 '${_oracowlService.tonightDSO[index]['constellation']}',
