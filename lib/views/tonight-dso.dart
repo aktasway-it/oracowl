@@ -60,7 +60,7 @@ class TonightDSO extends StatelessWidget {
                               title: Text(
                                   '${_oracowlService.tonightDSO[index]['familiar_name']}',
                                 style: TextStyle(
-                                  color: ThemeColors.primaryColor
+                                  color: ThemeColors.primaryColorLight
                                 ),
                               ),
                               content: FittedBox(

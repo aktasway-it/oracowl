@@ -10,6 +10,7 @@ class OracowlService {
   Future<bool> loadData(double latitude, double longitude, {forceReload = false}) async {
     try {
       if (!isDataLoaded() || forceReload) {
+        int timeOffset = DateTime.now().timeZoneOffset.inSeconds;
         String requestURI = 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude';
         Response response = await get(Uri.parse(requestURI));
         print(requestURI);

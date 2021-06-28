@@ -37,17 +37,22 @@ class TonightPlanets extends StatelessWidget {
                       onTap: () {
                         AlertDialog alert = AlertDialog(
                           backgroundColor: ThemeColors.secondaryColorDark,
-                          title: Text(
-                            _oracowlService.tonightPlanets[index]['name'],
-                            style: TextStyle(
-                                color: ThemeColors.primaryColor,
-                                fontSize: 24
-                            ),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                _oracowlService.tonightPlanets[index]['name'],
+                                style: TextStyle(
+                                    color: ThemeColors.primaryColorLight,
+                                    fontSize: 32
+                                ),
+                              ),
+                            ],
                           ),
                           content: FittedBox(
                             fit: BoxFit.fitHeight,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
