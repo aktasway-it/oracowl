@@ -11,7 +11,7 @@ class OracowlService {
     try {
       if (!isDataLoaded() || forceReload) {
         int timeOffset = DateTime.now().timeZoneOffset.inSeconds;
-        String requestURI = 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude';
+        String requestURI = 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset';
         Response response = await get(Uri.parse(requestURI));
         print(requestURI);
         print(response.body);
