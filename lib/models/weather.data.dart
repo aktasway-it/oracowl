@@ -94,7 +94,7 @@ class WeatherData {
     double avgWind = 0;
     double avgHumidity = 0;
     int moonIllumination = int.parse(astronomy['moon_illumination']);
-    if (moonIllumination >= 80) {
+    if (moonIllumination >= 90) {
       return 'E';
     }
     for (int i = 20; i < forecastTodayHourly.length; i++) {
@@ -118,8 +118,8 @@ class WeatherData {
     avgWind /= 10;
     avgHumidity /= 10;
 
-    int moonScore = ((100 - moonIllumination) * 0.4).round();
-    int cloudsScore = ((100 - avgClouds) * 0.3).round();
+    int moonScore = ((100 - moonIllumination) * 0.3).round();
+    int cloudsScore = ((100 - avgClouds) * 0.4).round();
     int windScore = (max((20 - avgWind), 0) * 0.2).round();
     int humidityScore = ((100 - avgHumidity) * 0.1).round();
     print('M: $moonScore, C: $cloudsScore, W: $windScore, H: $humidityScore');

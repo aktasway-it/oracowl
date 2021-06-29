@@ -163,28 +163,85 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 128,
-                                  width: 128,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage('assets/icons/owlrank.png'),
-                                          fit: BoxFit.fill)),
-                                  child: Center(
-                                    child: Text(
-                                        _weatherService.weather.tonightRank,
-                                        style: TextStyle(
-                                          fontSize: 48,
-                                          fontWeight: FontWeight.bold,
-                                          color: ThemeColors.textColor,
-                                            shadows: [
-                                              Shadow(
-                                                offset: Offset(3.0, 3.0),
-                                                blurRadius: 3.0,
-                                                color: Color.fromARGB(64, 0, 0, 0),
+                                InkWell(
+                                  onTap: () {
+                                    AlertDialog alert = AlertDialog(
+                                      backgroundColor: ThemeColors.secondaryColorDark,
+                                      title: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Owl Rank',
+                                            style: TextStyle(
+                                                color: ThemeColors.primaryColorLight,
+                                                fontSize: 32
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      content: FittedBox(
+                                        fit: BoxFit.fitHeight,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Image.asset('assets/icons/owlrank.png', width: 150),
+                                            SizedBox(height: 20),
+                                            Text(
+                                              'Questo valore indica quanto la\nserata corrente sia buona o meno\nper fare astrofotografia.\nIl valore viene calcolato tenendo\nin conto vari fattori, da quelli\nmeteo a quelli astronomici,\ncome ad esempio la luna.\n"A" indica una serata eccezionale,\nmentre "E" una serata per niente buona.',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: ThemeColors.textColor
                                               ),
-                                            ]
-                                        )),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              'Chiudi',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: ThemeColors.textColor
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    );
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return alert;
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 128,
+                                    width: 128,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage('assets/icons/owlrank.png'),
+                                            fit: BoxFit.fill)),
+                                    child: Center(
+                                      child: Text(
+                                          _weatherService.weather.tonightRank,
+                                          style: TextStyle(
+                                            fontSize: 48,
+                                            fontWeight: FontWeight.bold,
+                                            color: ThemeColors.textColor,
+                                              shadows: [
+                                                Shadow(
+                                                  offset: Offset(3.0, 3.0),
+                                                  blurRadius: 3.0,
+                                                  color: Color.fromARGB(64, 0, 0, 0),
+                                                ),
+                                              ]
+                                          )),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 5),
