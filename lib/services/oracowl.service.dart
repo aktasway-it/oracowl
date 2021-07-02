@@ -13,7 +13,7 @@ class OracowlService {
         int timeOffset = DateTime.now().timeZoneOffset.inSeconds;
         String requestURI = backupService ?
         'https://marcorapino.it:5001/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset'
-            : 'https://api.oracowll.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset';
+            : 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset';
         Response response = await get(Uri.parse(requestURI));
         print(requestURI);
         print(response.body);
