@@ -397,6 +397,6 @@ class _HomeState extends State<Home> {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    return DateFormat('EEEE d MMMM yyyy hh:mm').format(dateTime);
+    return DateFormat('EEEE d MMMM yyyy HH:mm').format(dateTime);
   }
 }

@@ -41,7 +41,7 @@ class WeatherData {
       return Map();
     }
     DateTime now = DateTime.now();
-    return _data['forecast']['forecastday'][0]['hour'][now.hour - 1];
+    return _data['forecast']['forecastday'][0]['hour'][now.hour];
   }
 
   bool get isDay {
@@ -97,13 +97,14 @@ class WeatherData {
     if (moonIllumination >= 90) {
       return 'E';
     }
-    for (int i = 20; i < forecastTodayHourly.length; i++) {
-      if (forecastTodayHourly[i]['chance_of_rain'] > 30) {
+    List todayForecast = _getForecastHourly(0);
+    for (int i = 20; i < todayForecast.length; i++) {
+      if (int.parse(todayForecast[i]['chance_of_rain']) > 30) {
         return 'E';
       }
-      avgClouds += forecastTodayHourly[i]['cloud'];
-      avgWind += forecastTodayHourly[i]['wind_kph'];
-      avgHumidity += forecastTodayHourly[i]['humidity'];
+      avgClouds += todayForecast[i]['cloud'];
+      avgWind += todayForecast[i]['wind_kph'];
+      avgHumidity += todayForecast[i]['humidity'];
     }
     for (int i = 0; i < 6; i++) {
       if (int.parse(forecastTomorrowHourly[i]['chance_of_rain']) > 30) {
@@ -120,7 +121,7 @@ class WeatherData {
 
     int moonScore = ((100 - moonIllumination) * 0.3).round();
     int cloudsScore = ((100 - avgClouds) * 0.4).round();
-    int windScore = (max((20 - avgWind), 0) * 0.2).round();
+    int windScore = (max((20 - avgWind), 0) / 20 * 100 * 0.2).round();
     int humidityScore = ((100 - avgHumidity) * 0.1).round();
     print('M: $moonScore, C: $cloudsScore, W: $windScore, H: $humidityScore');
     int totalScore = moonScore + cloudsScore + windScore + humidityScore;
