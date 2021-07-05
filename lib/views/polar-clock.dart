@@ -21,7 +21,6 @@ class _PolarClockState extends State<PolarClock> {
   @override
   void initState() {
     List dotPosition = _getDotPosition();
-    print(dotPosition);
     _dotX = dotPosition[0];
     _dotY = dotPosition[1];
     super.initState();
@@ -120,7 +119,6 @@ class _PolarClockState extends State<PolarClock> {
   }
 
   List _getDotPosition() {
-    print(cos((pi / 2) - _oracowlService.polaris['hour_angle_radians']));
     double x = 128 + 128 * cos((pi / 2) - _oracowlService.polaris['hour_angle_radians']);
     double y = 128 + 128 * sin((pi / 2) - _oracowlService.polaris['hour_angle_radians']);
 

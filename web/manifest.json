@@ -1,11 +1,11 @@
 {
-    "name": "astropills_tools",
-    "short_name": "astropills_tools",
+    "name": "Oracowl",
+    "short_name": "Oracowl",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Tollset for astrophotography",
+    "description": "A simple application for astrophotography planning!",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
