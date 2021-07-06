@@ -1,6 +1,7 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:astropills_tools/services/oracowl.service.dart';
+import 'package:astropills_tools/services/storage.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,6 +19,7 @@ class _LoadingState extends State<Loading> {
   OracowlService _oracowlService = OracowlService();
   WeatherService _weatherService = WeatherService();
   LocationService _locationService = LocationService();
+  StorageService _storageService = StorageService();
   bool _showReload = false;
 
   void loadData() async {

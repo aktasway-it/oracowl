@@ -1,5 +1,6 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
+import 'package:astropills_tools/services/storage.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +16,16 @@ class LocationPicker extends StatefulWidget {
 
 class _LocationPickerState extends State<LocationPicker> {
   final _formKey = GlobalKey<FormBuilderState>();
+  late List _savedLocations;
   LocationService _locationService = LocationService();
+  StorageService _storageService = StorageService();
+
+  @override
+  void initState() {
+    _savedLocations = _storageService.getData('saved-locations', []);
+    print(_savedLocations);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,88 +45,185 @@ class _LocationPickerState extends State<LocationPicker> {
           Container(
             decoration: BoxDecoration(color: Colors.black26),
           ),
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 90, 10, 0),
-            child: FormBuilder(
-              key: _formKey,
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    name: 'latitude',
-                    style: TextStyle(color: ThemeColors.textColor),
-                    decoration: InputDecoration(
-                        labelText: 'Latitudine',
-                        labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  FormBuilderTextField(
-                    name: 'longitude',
-                    style: TextStyle(color: ThemeColors.textColor),
-                    decoration: InputDecoration(
-                        labelText: 'Longitudine',
-                        labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 90, 10, 0),
+                child: FormBuilder(
+                  key: _formKey,
+                  child: Column(
                     children: [
-                      TextButton(
-                          onPressed: () {
-                            try {
-                              final latitude = double.parse(_formKey
-                                  .currentState!.fields['latitude']!.value);
-                              final longitude = double.parse(_formKey
-                                  .currentState!.fields['longitude']!.value);
-                              _locationService.createPositionFromLatLon(
-                                  latitude, longitude);
-                              Navigator.pushReplacementNamed(context, '/');
-                            } catch(ex) {
-                              Fluttertoast.showToast(
-                                  msg: "Inserisci dei valori di latitudine e longitudine validi.",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: ThemeColors.secondaryColor,
-                                  textColor: ThemeColors.textColor,
-                                  fontSize: 16.0
-                              );
-                            }
-                          },
-                          child: Row(
-                            children: [
-                              Icon(Icons.save_outlined),
-                              SizedBox(width: 10),
-                              Text(
-                                'Salva',
-                                style: TextStyle(color: ThemeColors.interactiveColor),
-                              ),
-                            ],
-                          )),
-                      TextButton(
-                          onPressed: () async {
-                            _locationService.flushPosition();
-                            bool hasPermission = await _locationService.hasPermission();
-                            if (hasPermission) {
-                              Navigator.pushReplacementNamed(context, '/');
-                            } else {
-                              _locationService.openSettings();
-                            }
-                          },
-                          child: Row(
-                            children: [
-                              Icon(Icons.location_on),
-                              SizedBox(width: 10),
-                              Text(
-                                'Usa GPS',
-                                style: TextStyle(color: ThemeColors.interactiveColor),
-                              ),
-                            ],
-                          )),
+                      FormBuilderTextField(
+                        name: 'locationName',
+                        style: TextStyle(color: ThemeColors.textColor),
+                        decoration: InputDecoration(
+                            labelText: 'Nome località',
+                            labelStyle: TextStyle(color: ThemeColors.primaryColor)),
+                        keyboardType: TextInputType.text,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: FormBuilderTextField(
+                              name: 'latitude',
+                              style: TextStyle(color: ThemeColors.textColor),
+                              decoration: InputDecoration(
+                                  labelText: 'Latitudine',
+                                  labelStyle: TextStyle(color: ThemeColors.primaryColor)),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: FormBuilderTextField(
+                              name: 'longitude',
+                              style: TextStyle(color: ThemeColors.textColor),
+                              decoration: InputDecoration(
+                                  labelText: 'Longitudine',
+                                  labelStyle: TextStyle(color: ThemeColors.primaryColor)),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                try {
+                                  final locationName = _formKey
+                                      .currentState!.fields['locationName']!.value.trim();
+                                  if (locationName == '') {
+                                    throw Exception();
+                                  }
+                                  final latitude = double.parse(_formKey
+                                      .currentState!.fields['latitude']!.value);
+                                  final longitude = double.parse(_formKey
+                                      .currentState!.fields['longitude']!.value);
+
+                                  _savedLocations.add({
+                                    'name': locationName,
+                                    'latitude': latitude,
+                                    'longitude': longitude
+                                  });
+                                  _storageService.setData('saved-locations', _savedLocations);
+                                  _locationService.createPositionFromLatLon(
+                                      latitude, longitude);
+                                  Navigator.pushReplacementNamed(context, '/');
+                                } catch(ex) {
+                                  Fluttertoast.showToast(
+                                      msg: "Inserisci un nome per la località e dei valori di latitudine e longitudine validi.",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ThemeColors.secondaryColor,
+                                      textColor: ThemeColors.textColor,
+                                      fontSize: 16.0
+                                  );
+                                }
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.save_outlined),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Salva',
+                                    style: TextStyle(color: ThemeColors.interactiveColor),
+                                  ),
+                                ],
+                              )),
+                          TextButton(
+                              onPressed: () async {
+                                _locationService.flushPosition();
+                                bool hasPermission = await _locationService.hasPermission();
+                                if (hasPermission) {
+                                  Navigator.pushReplacementNamed(context, '/');
+                                } else {
+                                  _locationService.openSettings();
+                                }
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(Icons.location_on),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Usa GPS',
+                                    style: TextStyle(color: ThemeColors.interactiveColor),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+              Divider(height: 40, color: ThemeColors.textColor),
+              Text(
+                  'Località salvate',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: ThemeColors.textColor,
+                )
+              ),
+              SizedBox(height: 20,),
+              Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 10),
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                        itemCount: _savedLocations.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              tileColor: ThemeColors.primaryColor,
+                              leading: TextButton(
+                                child: Icon(Icons.delete, size: 36, color: ThemeColors.secondaryColor),
+                                onPressed: () {
+                                  _savedLocations.removeAt(index);
+                                  _storageService.setData('saved-locations', _savedLocations);
+                                  setState(() {});
+                                },
+                              ),
+                              onTap: () {
+                                _locationService.createPositionFromLatLon(
+                                    _savedLocations[index]['latitude'], _savedLocations[index]['longitude']);
+                                Navigator.pushReplacementNamed(context, '/');
+                              },
+                              title: Text(
+                                _savedLocations[index]['name'],
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: ThemeColors.interactiveColor,
+                                ),
+                              ),
+                              subtitle: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Lat: ${_savedLocations[index]['latitude']}',
+                                    style: TextStyle(
+                                        color: ThemeColors.textColor,
+                                        fontSize: 12
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Lon: ${_savedLocations[index]['longitude']}',
+                                    style: TextStyle(
+                                        color: ThemeColors.textColor,
+                                        fontSize: 12
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        })
+                ),
+              )
+            ],
           )
         ])));
   }
