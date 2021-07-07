@@ -1,9 +1,17 @@
 import 'package:astropills_tools/core/theme.colors.dart';
+import 'package:astropills_tools/services/location.service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DrawerMenu extends StatelessWidget {
+class DrawerMenu extends StatefulWidget {
   const DrawerMenu();
+
+  @override
+  State<DrawerMenu> createState() => _DrawerMenuState();
+}
+
+class _DrawerMenuState extends State<DrawerMenu> {
+  final LocationService _locationService = LocationService();
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +81,13 @@ class DrawerMenu extends StatelessWidget {
             },
           ),
           ListTile(
+            title: Text('Mappa dei cieli bui'),
+            leading: Icon(Icons.dark_mode),
+            onTap: () {
+              _openDarkSkyMapURL();
+            },
+          ),
+          ListTile(
             title: Text('Tutorials'),
             leading: Icon(Icons.ondemand_video),
             onTap: () {
@@ -89,6 +104,13 @@ class DrawerMenu extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _openDarkSkyMapURL() async {
+    final lat = _locationService.position.latitude;
+    final lon = _locationService.position.longitude;
+    final url = 'https://www.lightpollutionmap.info/#zoom=10.00&lat=$lat&lon=$lon&layers=B0FFFFFFTFFFFFTFFFF';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   void _openYoutubeURL() async {

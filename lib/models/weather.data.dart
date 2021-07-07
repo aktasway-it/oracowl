@@ -74,6 +74,45 @@ class WeatherData {
     }
     return forecastHourlyList;
   }
+  
+  String _calculateRank(int moon, int clouds, int rain, int wind, int humidity) {
+    if (rain >= 20 || clouds >= 40) {
+      return 'E';
+    }
+    
+    int moonScore = ((100 - moon) * 0.3).round();
+    int cloudsScore = ((100 - clouds) * 0.4).round();
+    int windScore = (max((20 - wind), 0) / 20 * 100 * 0.2).round();
+    int humidityScore = ((100 - humidity) * 0.1).round();
+
+    /*print('$moon, $clouds, $wind, $humidity');
+    print('M: $moonScore, C: $cloudsScore, W: $windScore, H: $humidityScore');*/
+
+    int totalScore = moonScore + cloudsScore + windScore + humidityScore;
+    if (totalScore > 90) {
+      return 'A';
+    } else if (totalScore > 70) {
+      return 'B';
+    } else if (totalScore > 50) {
+      return 'C';
+    } else if (totalScore > 30) {
+      return 'D';
+    } else if (totalScore > 70) {
+      return 'E';
+    }
+
+    return 'N/A';
+  }
+
+  String getHourRank(int day, int hour) {
+    int moonIllumination = int.parse(astronomy['moon_illumination']);
+    int clouds = _getForecastHourly(day)[hour]['cloud'];
+    int wind = _getForecastHourly(day)[hour]['wind_kph'].round();
+    int humidity = _getForecastHourly(day)[hour]['humidity'];
+    int rain = int.parse(_getForecastHourly(day)[hour]['chance_of_rain']);
+    
+    return _calculateRank(moonIllumination, clouds, rain, wind, humidity);
+  }
 
   List<Map> get forecastTodayHourly {
     DateTime now = DateTime.now();
@@ -91,8 +130,10 @@ class WeatherData {
 
   String get tonightRank {
     double avgClouds = 0;
+    double avgRain = 0;
     double avgWind = 0;
     double avgHumidity = 0;
+
     int moonIllumination = int.parse(astronomy['moon_illumination']);
     if (moonIllumination >= 90) {
       return 'E';
@@ -103,10 +144,11 @@ class WeatherData {
         return 'E';
       }
       avgClouds += todayForecast[i]['cloud'];
+      avgRain += int.parse(todayForecast[i]['chance_of_rain']);
       avgWind += todayForecast[i]['wind_kph'];
       avgHumidity += todayForecast[i]['humidity'];
     }
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++) {
       if (int.parse(forecastTomorrowHourly[i]['chance_of_rain']) > 30) {
         return 'E';
       }
@@ -116,28 +158,11 @@ class WeatherData {
     }
 
     avgClouds /= 10;
+    avgRain /= 10;
     avgWind /= 10;
     avgHumidity /= 10;
 
-    int moonScore = ((100 - moonIllumination) * 0.3).round();
-    int cloudsScore = ((100 - avgClouds) * 0.4).round();
-    int windScore = (max((20 - avgWind), 0) / 20 * 100 * 0.2).round();
-    int humidityScore = ((100 - avgHumidity) * 0.1).round();
-    print('M: $moonScore, C: $cloudsScore, W: $windScore, H: $humidityScore');
-    int totalScore = moonScore + cloudsScore + windScore + humidityScore;
-    if (totalScore > 90) {
-      return 'A';
-    } else if (totalScore > 70) {
-      return 'B';
-    } else if (totalScore > 50) {
-      return 'C';
-    } else if (totalScore > 30) {
-      return 'D';
-    } else if (totalScore > 70) {
-      return 'E';
-    }
-
-    return 'N/A';
+    return _calculateRank(moonIllumination, avgClouds.round(), avgRain.round(), avgWind.round(), avgHumidity.round());
   }
 
   Map get astronomy {

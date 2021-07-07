@@ -44,19 +44,19 @@ class _ForecastState extends State<Forecast> {
                       ListView.builder(
                           itemCount: _weatherService.weather.forecastTodayHourly.length,
                           itemBuilder: (context, index) {
-                            return ForecastHour(_weatherService.weather.forecastTodayHourly[index]);
+                            return ForecastHour(0, index, _weatherService.weather.forecastTodayHourly[index]);
                             }
                       ),
                       ListView.builder(
                           itemCount: _weatherService.weather.forecastTomorrowHourly.length,
                           itemBuilder: (context, index) {
-                            return ForecastHour(_weatherService.weather.forecastTomorrowHourly[index]);
+                            return ForecastHour(1, index, _weatherService.weather.forecastTomorrowHourly[index]);
                           }
                       ),
                       ListView.builder(
                           itemCount: _weatherService.weather.forecastAfterTomorrowHourly.length,
                           itemBuilder: (context, index) {
-                            return ForecastHour(_weatherService.weather.forecastAfterTomorrowHourly[index]);
+                            return ForecastHour(2, index, _weatherService.weather.forecastAfterTomorrowHourly[index]);
                           }
                       )
                     ]
