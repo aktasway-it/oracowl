@@ -76,12 +76,12 @@ class WeatherData {
   }
   
   String _calculateRank(int moon, int clouds, int rain, int wind, int humidity) {
-    if (rain >= 20 || clouds >= 40) {
+    if (rain >= 20) {
       return 'E';
     }
     
     int moonScore = ((100 - moon) * 0.3).round();
-    int cloudsScore = ((100 - clouds) * 0.4).round();
+    int cloudsScore = (max((50 - clouds), 0) / 50 * 100 * 0.4).round();
     int windScore = (max((20 - wind), 0) / 20 * 100 * 0.2).round();
     int humidityScore = ((100 - humidity) * 0.1).round();
 

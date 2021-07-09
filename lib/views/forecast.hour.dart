@@ -36,6 +36,18 @@ class _ForecastHourState extends State<ForecastHour> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Icon(
+                    Icons.cloud,
+                    color: ThemeColors.blackColor,
+                    size: 16,
+                  ),
+                  Text(
+                    '${widget._weatherData['cloud']} %',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: ThemeColors.blackColor,
+                    ),
+                  ),
+                  Icon(
                     Icons.umbrella,
                     color: ThemeColors.secondaryColorDark,
                     size: 16,
@@ -70,18 +82,6 @@ class _ForecastHourState extends State<ForecastHour> {
                     style: TextStyle(
                       fontSize: 10,
                       color: ThemeColors.primaryColor,
-                    ),
-                  ),
-                  Icon(
-                    Icons.cloud,
-                    color: ThemeColors.blackColor,
-                    size: 16,
-                  ),
-                  Text(
-                    '${widget._weatherData['cloud']} %',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColors.blackColor,
                     ),
                   )
                 ],
