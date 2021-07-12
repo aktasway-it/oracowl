@@ -2,18 +2,32 @@ import 'dart:convert';
 
 import 'dart:math';
 
+import 'package:astropills_tools/services/oracowl.service.dart';
+
 class WeatherData {
   final Map _moonPhaseIcons = {
-    'New Moon': 'assets/icons/moon/new.png',
-    'Waxing Crescent': 'assets/icons/moon/waxing_crescent.png',
-    'First Quarter': 'assets/icons/moon/first_quarter.png',
-    'Waxing Gibbous': 'assets/icons/moon/waxing_gibbous.png',
-    'Full Moon': 'assets/icons/moon/full.png',
-    'Waning Gibbous': 'assets/icons/moon/waning_gibbous.png',
-    'Last Quarter': 'assets/icons/moon/last_quarter.png',
-    'Waning Crescent': 'assets/icons/moon/waning_crescent.png'
+    'new': 'assets/icons/moon/new.png',
+    'waxing_crescent': 'assets/icons/moon/waxing_crescent.png',
+    'first_quarter': 'assets/icons/moon/first_quarter.png',
+    'waxing_gibbous': 'assets/icons/moon/waxing_gibbous.png',
+    'full': 'assets/icons/moon/full.png',
+    'waning_gibbous': 'assets/icons/moon/waning_gibbous.png',
+    'last_quarter': 'assets/icons/moon/last_quarter.png',
+    'waning_crescent': 'assets/icons/moon/waning_crescent.png'
   };
+  final List _phases = [
+    ['new', 0, 10],
+    ['waxing_crescent', 10, 40],
+    ['first_quarter', 40, 70],
+    ['waxing_gibbous', 70, 95],
+    ['full', 95, 105],
+    ['waning_gibbous', 105, 130],
+    ['last_quarter', 130, 160],
+    ['waning_crescent', 160, 190],
+    ['new', 190, 200],
+  ];
   Map _data = Map();
+  OracowlService _oracowlService = OracowlService();
 
   WeatherData.empty();
   WeatherData(String jsonData) {
@@ -62,6 +76,17 @@ class WeatherData {
       };
     }
     return _data['forecast']['forecastday'][0]['day'];
+  }
+
+  String _getLunarPhaseImage() {
+    int phase = _oracowlService.tonightPlanets[1]['phase_string'] == 'waxing' ?
+    _oracowlService.tonightPlanets[1]['phase'] : 100 + (100 - _oracowlService.tonightPlanets[1]['phase']);
+    for (int i = 0; i < this._phases.length; i++) {
+      if (phase >= this._phases[i][1] && phase <= this._phases[i][2]) {
+        return 'assets/icons/moon/${this._phases[i][0]}.png';
+      }
+    }
+    return 'assets/icons/moon/full.png';
   }
 
   List<Map> _getForecastHourly(int dayIndex) {
@@ -178,7 +203,10 @@ class WeatherData {
       };
     }
     Map astronomy =  _data['forecast']['forecastday'][0]['astro'];
-    astronomy['moon_icon'] = _moonPhaseIcons[astronomy['moon_phase']];
+    astronomy['moon_illumination'] = _oracowlService.tonightPlanets[1]['phase'].toString();
+    astronomy['moon_icon'] = _getLunarPhaseImage();
+    astronomy['moonrise'] = _oracowlService.tonightPlanets[1]['rise_time'];
+    astronomy['moonset'] = _oracowlService.tonightPlanets[1]['set_time'];
     return astronomy;
   }
 }
