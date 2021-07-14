@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import "package:flutter/foundation.dart" show kIsWeb;
 
 class LocationService {
   static final LocationService _singleton = LocationService._internal();
@@ -13,11 +14,13 @@ class LocationService {
   Future<bool> fetchCurrentLocation() async {
     try {
       if (!this._manuallySet) {
-        LocationPermission permission = await Geolocator.requestPermission();
-        permission = await Geolocator.checkPermission();
-        if (permission == LocationPermission.denied ||
-            permission == LocationPermission.deniedForever) {
-          return false;
+        if (!kIsWeb) {
+          LocationPermission permission = await Geolocator.requestPermission();
+          permission = await Geolocator.checkPermission();
+          if (permission == LocationPermission.denied ||
+              permission == LocationPermission.deniedForever) {
+            return false;
+          }
         }
         this._currentLocation = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best);

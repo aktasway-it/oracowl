@@ -70,7 +70,7 @@ class _LocationPickerState extends State<LocationPicker> {
                               decoration: InputDecoration(
                                   labelText: 'Latitudine',
                                   labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(decimal: true),
                             ),
                           ),
                           SizedBox(width: 20),
@@ -81,7 +81,7 @@ class _LocationPickerState extends State<LocationPicker> {
                               decoration: InputDecoration(
                                   labelText: 'Longitudine',
                                   labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(decimal: true),
                             ),
                           ),
                         ],
