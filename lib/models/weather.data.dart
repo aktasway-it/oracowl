@@ -122,11 +122,9 @@ class WeatherData {
       return 'C';
     } else if (totalScore > 30) {
       return 'D';
-    } else if (totalScore > 70) {
+    } else {
       return 'E';
     }
-
-    return 'N/A';
   }
 
   String getHourRank(int day, int hour) {

@@ -60,13 +60,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
             },
           ),
           ListTile(
-            title: Text('Orologio Polare'),
-            leading: Icon(Icons.timelapse),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/polar');
-            },
-          ),
-          ListTile(
             title: Text('Profondo Cielo'),
             leading: Icon(Icons.auto_awesome),
             onTap: () {
@@ -80,12 +73,39 @@ class _DrawerMenuState extends State<DrawerMenu> {
               Navigator.pushReplacementNamed(context, '/tonight/planets');
             },
           ),
-          ListTile(
-            title: Text('Mappa dei cieli bui'),
-            leading: Icon(Icons.dark_mode),
-            onTap: () {
-              _openDarkSkyMapURL();
-            },
+          ExpansionTile(
+            title: Text("Strumenti"),
+            leading: Icon(Icons.construction),
+            children: [
+              ListTile(
+                title: Text('Orologio Polare'),
+                leading: Icon(Icons.timelapse),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/polar');
+                },
+              ),
+              ListTile(
+                title: Text('Calcolatori'),
+                leading: Icon(Icons.calculate),
+                onTap: () {
+                  _openCalculatorsURL();
+                },
+              ),
+              ListTile(
+                title: Text('Mappa dei cieli bui'),
+                leading: Icon(Icons.dark_mode),
+                onTap: () {
+                  _openDarkSkyMapURL();
+                },
+              ),
+              ListTile(
+                title: Text('Stellarium'),
+                leading: Icon(Icons.public),
+                onTap: () {
+                  _openStellariumURL();
+                },
+              ),
+            ],
           ),
           ListTile(
             title: Text('Tutorials'),
@@ -104,6 +124,16 @@ class _DrawerMenuState extends State<DrawerMenu> {
         ],
       ),
     );
+  }
+
+  void _openStellariumURL() async {
+    final url = 'https://stellarium-web.org/';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  void _openCalculatorsURL() async {
+    final url = 'https://astronomy.tools/calculators/ccd';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
   void _openDarkSkyMapURL() async {
