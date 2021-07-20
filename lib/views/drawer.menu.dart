@@ -100,7 +100,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ),
               ListTile(
                 title: Text('Stellarium'),
-                leading: Icon(Icons.public),
+                leading: Icon(Icons.star),
                 onTap: () {
                   _openStellariumURL();
                 },
