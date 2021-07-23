@@ -28,93 +28,99 @@ class _PolarClockState extends State<PolarClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          title: Text(''),
-          elevation: 0,
-          backgroundColor: Colors.transparent
-        ),
-        drawer: DrawerMenu(),
-        body: Container(
-            child: Stack(
-                children: [
-                  Image.asset('assets/backgrounds/night.jpg',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.black26),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Stack(
-                            children: [
-                              Image.asset('assets/images/polar_clock.png'),
-                              Positioned(
-                                  left: _dotX,
-                                  top: _dotY,
-                                  child: Image.asset('assets/images/dot.png', color: ThemeColors.interactiveColor)
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment:  MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'Polaris HA',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColors.primaryColor
-                                    ),
-                                  ),
-                                  Text(
-                                    _oracowlService.polaris['hour_angle_ra'],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Ora siderale',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColors.primaryColor
-                                    ),
-                                  ),
-                                  Text(
-                                    _oracowlService.polaris['sidereal_time'],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, '/home');
+        return true;
+      },
+      child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: Text(''),
+            elevation: 0,
+            backgroundColor: Colors.transparent
+          ),
+          drawer: DrawerMenu(),
+          body: Container(
+              child: Stack(
+                  children: [
+                    Image.asset('assets/backgrounds/night.jpg',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity),
+                    Container(
+                      decoration: BoxDecoration(color: Colors.black26),
                     ),
-                  )
-              ]
-            )
-        )
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Stack(
+                              children: [
+                                Image.asset('assets/images/polar_clock.png'),
+                                Positioned(
+                                    left: _dotX,
+                                    top: _dotY,
+                                    child: Image.asset('assets/images/dot.png', color: ThemeColors.interactiveColor)
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment:  MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Polaris HA',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.primaryColor
+                                      ),
+                                    ),
+                                    Text(
+                                      _oracowlService.polaris['hour_angle_ra'],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.textColor
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Ora siderale',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.primaryColor
+                                      ),
+                                    ),
+                                    Text(
+                                      _oracowlService.polaris['sidereal_time'],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ThemeColors.textColor
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ]
+              )
+          )
+      ),
     );
   }
 
