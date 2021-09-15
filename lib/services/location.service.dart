@@ -49,7 +49,7 @@ class LocationService {
     if (_currentLocation == null) {
       return 'N/A';
     }
-    return '${_currentLocation.latitude}, ${_currentLocation.longitude}';
+    return '${_currentLocation.latitude.toStringAsFixed(4)}, ${_currentLocation.longitude.toStringAsFixed(4)}';
   }
 
   int get altitude {

@@ -10,6 +10,7 @@ import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -79,23 +80,43 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 75),
-                            Text(
-                              _weatherService.weather.location,
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: ThemeColors.primaryColor),
-                            ),
-                            Text(
-                              _timeString,
-                              style: TextStyle(
-                                  fontSize: 14, color: ThemeColors.textColor),
-                            )
-                          ],
+                        InkWell(
+                          onTap: () {
+                            _openGoogleMapsURL();
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 75),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 14,
+                                    color: ThemeColors.interactiveColor,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    _locationService.locationAsString,
+                                    style: TextStyle(
+                                        fontSize: 10, color: ThemeColors.interactiveColor),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                _weatherService.weather.location,
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: ThemeColors.primaryColor),
+                              ),
+                              Text(
+                                _timeString,
+                                style: TextStyle(
+                                    fontSize: 14, color: ThemeColors.textColor),
+                              )
+                            ],
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -103,29 +124,34 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 128,
-                                  width: 128,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(_weatherService
-                                              .weather.astronomy['moon_icon']),
-                                          fit: BoxFit.fill)),
-                                  child: Center(
-                                    child: Text(
-                                        '${_weatherService.weather.astronomy['moon_illumination']}%',
-                                        style: TextStyle(
-                                          fontSize: 48,
-                                          fontWeight: FontWeight.bold,
-                                          color: ThemeColors.textColor,
-                                          shadows: [
-                                            Shadow(
-                                              offset: Offset(3.0, 3.0),
-                                              blurRadius: 3.0,
-                                              color: Color.fromARGB(32, 0, 0, 0),
-                                            ),
-                                          ]
-                                        )),
+                                InkWell(
+                                  onTap: () {
+                                    _openLunarCalendarURL();
+                                  },
+                                  child: Container(
+                                    height: 128,
+                                    width: 128,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(_weatherService
+                                                .weather.astronomy['moon_icon']),
+                                            fit: BoxFit.fill)),
+                                    child: Center(
+                                      child: Text(
+                                          '${_weatherService.weather.astronomy['moon_illumination']}%',
+                                          style: TextStyle(
+                                            fontSize: 48,
+                                            fontWeight: FontWeight.bold,
+                                            color: ThemeColors.textColor,
+                                            shadows: [
+                                              Shadow(
+                                                offset: Offset(3.0, 3.0),
+                                                blurRadius: 3.0,
+                                                color: Color.fromARGB(32, 0, 0, 0),
+                                              ),
+                                            ]
+                                          )),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 5),
@@ -398,5 +424,19 @@ class _HomeState extends State<Home> {
 
   String _formatDateTime(DateTime dateTime) {
     return DateFormat('EEEE d MMMM yyyy HH:mm').format(dateTime);
+  }
+
+  void _openLunarCalendarURL() async {
+    final lat = _locationService.position.latitude;
+    final lon = _locationService.position.longitude;
+    final url = 'https://www.timeanddate.com/moon/phases/@$lat,$lon';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  void _openGoogleMapsURL() async {
+    final lat = _locationService.position.latitude;
+    final lon = _locationService.position.longitude;
+    final url = 'https://www.google.com/maps/@$lat,$lon,13z';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 }

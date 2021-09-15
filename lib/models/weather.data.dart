@@ -128,13 +128,16 @@ class WeatherData {
   }
 
   String getHourRank(int day, int hour) {
-    int moonIllumination = int.parse(astronomy['moon_illumination']);
-    int clouds = _getForecastHourly(day)[hour]['cloud'];
-    int wind = _getForecastHourly(day)[hour]['wind_kph'].round();
-    int humidity = _getForecastHourly(day)[hour]['humidity'];
-    int rain = int.parse(_getForecastHourly(day)[hour]['chance_of_rain']);
-    
-    return _calculateRank(moonIllumination, clouds, rain, wind, humidity);
+    try {
+      int moonIllumination = int.parse(astronomy['moon_illumination']);
+      int clouds = _getForecastHourly(day)[hour]['cloud'];
+      int wind = _getForecastHourly(day)[hour]['wind_kph'].round();
+      int humidity = _getForecastHourly(day)[hour]['humidity'];
+      int rain = _getForecastHourly(day)[hour]['chance_of_rain'];
+      return _calculateRank(moonIllumination, clouds, rain, wind, humidity);
+    } catch(ex) {
+      return 'N/A';
+    }
   }
 
   List<Map> get forecastTodayHourly {
@@ -152,40 +155,46 @@ class WeatherData {
   }
 
   String get tonightRank {
-    double avgClouds = 0;
-    double avgRain = 0;
-    double avgWind = 0;
-    double avgHumidity = 0;
+    try {
+      double avgClouds = 0;
+      double avgRain = 0;
+      double avgWind = 0;
+      double avgHumidity = 0;
 
-    int moonIllumination = int.parse(astronomy['moon_illumination']);
-    if (moonIllumination >= 90) {
-      return 'E';
-    }
-    List todayForecast = _getForecastHourly(0);
-    for (int i = 20; i < todayForecast.length; i++) {
-      if (int.parse(todayForecast[i]['chance_of_rain']) > 30) {
+      int moonIllumination = int.parse(astronomy['moon_illumination']);
+      if (moonIllumination >= 90) {
         return 'E';
       }
-      avgClouds += todayForecast[i]['cloud'];
-      avgRain += int.parse(todayForecast[i]['chance_of_rain']);
-      avgWind += todayForecast[i]['wind_kph'];
-      avgHumidity += todayForecast[i]['humidity'];
-    }
-    for (int i = 0; i < 5; i++) {
-      if (int.parse(forecastTomorrowHourly[i]['chance_of_rain']) > 30) {
-        return 'E';
+      List todayForecast = _getForecastHourly(0);
+      for (int i = 20; i < todayForecast.length; i++) {
+        if (todayForecast[i]['chance_of_rain'] > 30) {
+          return 'E';
+        }
+        avgClouds += todayForecast[i]['cloud'];
+        avgRain += todayForecast[i]['chance_of_rain'];
+        avgWind += todayForecast[i]['wind_kph'];
+        avgHumidity += todayForecast[i]['humidity'];
       }
-      avgClouds += forecastTomorrowHourly[i]['cloud'];
-      avgWind += forecastTomorrowHourly[i]['wind_kph'];
-      avgHumidity += forecastTomorrowHourly[i]['humidity'];
+      for (int i = 0; i < 5; i++) {
+        if (forecastTomorrowHourly[i]['chance_of_rain'] > 30) {
+          return 'E';
+        }
+        avgClouds += forecastTomorrowHourly[i]['cloud'];
+        avgWind += forecastTomorrowHourly[i]['wind_kph'];
+        avgHumidity += forecastTomorrowHourly[i]['humidity'];
+      }
+
+      avgClouds /= 10;
+      avgRain /= 10;
+      avgWind /= 10;
+      avgHumidity /= 10;
+
+      return _calculateRank(
+          moonIllumination, avgClouds.round(), avgRain.round(), avgWind.round(),
+          avgHumidity.round());
+    } catch(ex) {
+      return 'N/A';
     }
-
-    avgClouds /= 10;
-    avgRain /= 10;
-    avgWind /= 10;
-    avgHumidity /= 10;
-
-    return _calculateRank(moonIllumination, avgClouds.round(), avgRain.round(), avgWind.round(), avgHumidity.round());
   }
 
   Map get astronomy {

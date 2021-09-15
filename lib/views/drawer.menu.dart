@@ -85,6 +85,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 },
               ),
               ListTile(
+                title: Text('Calendario Lunare'),
+                leading: Icon(Icons.lens),
+                onTap: () {
+                  _openLunarCalendarURL();
+                },
+              ),
+              ListTile(
                 title: Text('Calcolatori'),
                 leading: Icon(Icons.calculate),
                 onTap: () {
@@ -133,6 +140,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
 
   void _openCalculatorsURL() async {
     final url = 'https://astronomy.tools/calculators/ccd';
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
+
+  void _openLunarCalendarURL() async {
+    final lat = _locationService.position.latitude;
+    final lon = _locationService.position.longitude;
+    final url = 'https://www.timeanddate.com/moon/phases/@$lat,$lon';
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
