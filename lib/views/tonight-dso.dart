@@ -1,6 +1,7 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/oracowl.service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +22,7 @@ class TonightDSO extends StatelessWidget {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('Profondo cielo'),
+              title: Text('deep_sky').tr(),
               elevation: 0,
               centerTitle: true,
               backgroundColor: ThemeColors.secondaryColor),
@@ -77,47 +78,47 @@ class TonightDSO extends StatelessWidget {
                                       CachedNetworkImage(imageUrl: _oracowlService.tonightDSO[index]['image_url']),
                                       SizedBox(height: 20),
                                       Text(
-                                        'Magnitudine: ${_oracowlService.tonightDSO[index]['magnitude']}',
+                                        'magnitude',
                                         style: TextStyle(
                                           fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      ),
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['magnitude'].toString()]),
                                       Text(
-                                          'Dimensione: ${_oracowlService.tonightDSO[index]['size']}',
+                                          'size',
                                         style: TextStyle(
                                             fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      ),
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['size'].toString()]),
                                       Text(
-                                          'Altezza al tramonto: ${_oracowlService.tonightDSO[index]['altitude_at_sunset']}°',
+                                          'set_elevation',
                                         style: TextStyle(
                                             fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      ),
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_at_sunset'].toString()]),
                                       Text(
-                                          'Altezza all\'alba: ${_oracowlService.tonightDSO[index]['altitude_at_sunrise']}°',
+                                          'rise_elevation',
                                         style: TextStyle(
                                             fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      ),
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_at_sunrise'].toString()]),
                                       Text(
-                                          'Massima altezza: ${_oracowlService.tonightDSO[index]['altitude_max']}°',
+                                          'transit',
                                         style: TextStyle(
                                             fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      ),
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_max'].toString(), _oracowlService.tonightDSO[index]['transit'].toString()]),
                                       Text(
-                                          'Transita alle: ${_oracowlService.tonightDSO[index]['transit']}',
+                                          'transit_time',
                                         style: TextStyle(
                                             fontSize: 24,
                                             color: ThemeColors.textColor
                                         ),
-                                      )
+                                      ).tr(args: [_oracowlService.tonightDSO[index]['transit'].toString()])
                                     ],
                                   ),
                                 ),
@@ -127,12 +128,12 @@ class TonightDSO extends StatelessWidget {
                                         Navigator.pop(context);
                                       },
                                       child: Text(
-                                          'Chiudi',
+                                          'close',
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: ThemeColors.textColor
                                         ),
-                                      )
+                                      ).tr()
                                   ),
                                   TextButton(
                                       onPressed: () {
@@ -141,12 +142,12 @@ class TonightDSO extends StatelessWidget {
                                                 ['telescopius_url']);
                                       },
                                       child: Text(
-                                          'Apri in Telescopius',
+                                          'open_telescopius',
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: ThemeColors.interactiveColor
                                         ),
-                                      )
+                                      ).tr()
                                   )
                                 ],
                               );

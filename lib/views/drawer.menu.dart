@@ -2,6 +2,7 @@ import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/location.service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu();
@@ -39,74 +40,74 @@ class _DrawerMenuState extends State<DrawerMenu> {
               )
           ),
           ListTile(
-            title: Text('Home'),
+            title: Text('home').tr(),
             leading: Icon(Icons.home),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/home');
             },
           ),
           ListTile(
-            title: Text('Scegli località'),
+            title: Text('pick_location').tr(),
             leading: Icon(Icons.location_on),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/location');
             },
           ),
           ListTile(
-            title: Text('Meteo'),
+            title: Text('weather').tr(),
             leading: Icon(Icons.wb_sunny),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/forecast');
             },
           ),
           ListTile(
-            title: Text('Profondo Cielo'),
+            title: Text('deep_sky').tr(),
             leading: Icon(Icons.auto_awesome),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/tonight/dso');
             },
           ),
           ListTile(
-            title: Text('Pianeti'),
+            title: Text('planets').tr(),
             leading: Icon(Icons.hdr_strong),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/tonight/planets');
             },
           ),
           ExpansionTile(
-            title: Text("Strumenti"),
+            title: Text("tools").tr(),
             leading: Icon(Icons.construction),
             children: [
               ListTile(
-                title: Text('Orologio Polare'),
+                title: Text('polar_clock').tr(),
                 leading: Icon(Icons.timelapse),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, '/polar');
                 },
               ),
               ListTile(
-                title: Text('Calendario Lunare'),
+                title: Text('moon_calendar').tr(),
                 leading: Icon(Icons.lens),
                 onTap: () {
                   _openLunarCalendarURL();
                 },
               ),
               ListTile(
-                title: Text('Calcolatori'),
+                title: Text('calculators').tr(),
                 leading: Icon(Icons.calculate),
                 onTap: () {
                   _openCalculatorsURL();
                 },
               ),
               ListTile(
-                title: Text('Mappa dei cieli bui'),
+                title: Text('dark_sky_maps').tr(),
                 leading: Icon(Icons.dark_mode),
                 onTap: () {
                   _openDarkSkyMapURL();
                 },
               ),
               ListTile(
-                title: Text('Stellarium'),
+                title: Text('stellarium').tr(),
                 leading: Icon(Icons.star),
                 onTap: () {
                   _openStellariumURL();
@@ -115,14 +116,14 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ],
           ),
           ListTile(
-            title: Text('Tutorials'),
+            title: Text('tutorials').tr(),
             leading: Icon(Icons.ondemand_video),
             onTap: () {
               _openYoutubeURL();
             },
           ),
           ListTile(
-            title: Text('Invia un feedback'),
+            title: Text('send_feedback').tr(),
             leading: Icon(Icons.email),
             onTap: () {
               _openFeedbackURL();

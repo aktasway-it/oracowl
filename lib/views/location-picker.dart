@@ -4,6 +4,7 @@ import 'package:astropills_tools/services/storage.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'drawer.menu.dart';
 
@@ -37,7 +38,7 @@ class _LocationPickerState extends State<LocationPicker> {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('Scegli località'),
+              title: Text('pick_location').tr(),
               elevation: 0,
               centerTitle: true,
               backgroundColor: ThemeColors.secondaryColor),
@@ -62,7 +63,7 @@ class _LocationPickerState extends State<LocationPicker> {
                           name: 'locationName',
                           style: TextStyle(color: ThemeColors.textColor),
                           decoration: InputDecoration(
-                              labelText: 'Nome località',
+                              labelText: 'location_name'.tr(),
                               labelStyle: TextStyle(color: ThemeColors.primaryColor)),
                           keyboardType: TextInputType.text,
                         ),
@@ -73,7 +74,7 @@ class _LocationPickerState extends State<LocationPicker> {
                                 name: 'latitude',
                                 style: TextStyle(color: ThemeColors.textColor),
                                 decoration: InputDecoration(
-                                    labelText: 'Latitudine',
+                                    labelText: 'latitude'.tr(),
                                     labelStyle: TextStyle(color: ThemeColors.primaryColor)),
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                               ),
@@ -84,7 +85,7 @@ class _LocationPickerState extends State<LocationPicker> {
                                 name: 'longitude',
                                 style: TextStyle(color: ThemeColors.textColor),
                                 decoration: InputDecoration(
-                                    labelText: 'Longitudine',
+                                    labelText: 'longitude'.tr(),
                                     labelStyle: TextStyle(color: ThemeColors.primaryColor)),
                                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                               ),
@@ -118,7 +119,7 @@ class _LocationPickerState extends State<LocationPicker> {
                                     Navigator.pushReplacementNamed(context, '/');
                                   } catch(ex) {
                                     Fluttertoast.showToast(
-                                        msg: "Inserisci un nome per la località e dei valori di latitudine e longitudine validi.",
+                                        msg: "insert_valid_location".tr(),
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
@@ -133,9 +134,9 @@ class _LocationPickerState extends State<LocationPicker> {
                                     Icon(Icons.save_outlined),
                                     SizedBox(width: 10),
                                     Text(
-                                      'Salva',
+                                      'save',
                                       style: TextStyle(color: ThemeColors.interactiveColor),
-                                    ),
+                                    ).tr(),
                                   ],
                                 )),
                             TextButton(
@@ -153,9 +154,9 @@ class _LocationPickerState extends State<LocationPicker> {
                                     Icon(Icons.location_on),
                                     SizedBox(width: 10),
                                     Text(
-                                      'Usa GPS',
+                                      'use_gps',
                                       style: TextStyle(color: ThemeColors.interactiveColor),
-                                    ),
+                                    ).tr(),
                                   ],
                                 )),
                           ],
@@ -166,12 +167,12 @@ class _LocationPickerState extends State<LocationPicker> {
                 ),
                 Divider(height: 40, color: ThemeColors.textColor),
                 Text(
-                    'Località salvate',
+                    'saved_locations',
                   style: TextStyle(
                     fontSize: 22,
                     color: ThemeColors.textColor,
                   )
-                ),
+                ).tr(),
                 SizedBox(height: 20,),
                 Expanded(
                   child: Container(

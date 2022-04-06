@@ -6,6 +6,7 @@ import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 
 class Loading extends StatefulWidget {
@@ -26,6 +27,7 @@ class _LoadingState extends State<Loading> {
     setState(() {
       _showReload = false;
     });
+    String locale = context.locale.toString();
     bool positionLoaded =
         await _locationService.fetchCurrentLocation();
     if (!positionLoaded) {
@@ -39,7 +41,7 @@ class _LoadingState extends State<Loading> {
       oracowlLoaded = await _oracowlService.loadData(_locationService.position.latitude, _locationService.position.longitude,
           forceReload: true, backupService: true);
     }
-    bool weatherLoaded = await _weatherService.loadForecast(_locationService.position.latitude, _locationService.position.longitude,
+    bool weatherLoaded = await _weatherService.loadForecast(_locationService.position.latitude, _locationService.position.longitude, locale,
         forceReload: true);
     if (oracowlLoaded && weatherLoaded) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -80,7 +82,9 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
-    loadData();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      loadData();
+    });
     super.initState();
   }
 

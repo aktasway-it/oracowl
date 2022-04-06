@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Home extends StatefulWidget {
   const Home();
@@ -28,12 +29,14 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    Intl.defaultLocale = 'it_IT';
-    initializeDateFormatting('it_IT', null).then((value) {
-      _getTime();
-      _timer = Timer.periodic(Duration(seconds: 60), (Timer t) => _getTime());
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      String locale = context.locale.toStringWithSeparator();
+      Intl.defaultLocale = locale;
+      initializeDateFormatting(locale, null).then((value) {
+        _getTime();
+        _timer = Timer.periodic(Duration(seconds: 60), (Timer t) => _getTime());
+      });
     });
-
     super.initState();
   }
 
@@ -214,12 +217,12 @@ class _HomeState extends State<Home> {
                                             Image.asset('assets/icons/owlrank.png', width: 150),
                                             SizedBox(height: 20),
                                             Text(
-                                              'Questo valore indica quanto la\nserata corrente sia buona o meno\nper fare astrofotografia.\nIl valore viene calcolato tenendo\nin conto vari fattori, da quelli\nmeteo a quelli astronomici,\ncome ad esempio la luna.\n"A" indica una serata eccezionale,\nmentre "E" una serata per niente buona.',
+                                              'oracowl_rank_info',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: ThemeColors.textColor
                                               ),
-                                            ),
+                                            ).tr(),
                                           ],
                                         ),
                                       ),
@@ -229,12 +232,12 @@ class _HomeState extends State<Home> {
                                               Navigator.pop(context);
                                             },
                                             child: Text(
-                                              'Chiudi',
+                                              'close',
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: ThemeColors.textColor
                                               ),
-                                            )
+                                            ).tr()
                                         )
                                       ],
                                     );

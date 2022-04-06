@@ -1,5 +1,6 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/oracowl.service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -94,13 +95,13 @@ class _PolarClockState extends State<PolarClock> {
                                 Column(
                                   children: [
                                     Text(
-                                      'Ora siderale',
+                                      'sidereal_hour_angle',
                                       style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold,
                                           color: ThemeColors.primaryColor
                                       ),
-                                    ),
+                                    ).tr(),
                                     Text(
                                       _oracowlService.polaris['sidereal_time'],
                                       style: TextStyle(

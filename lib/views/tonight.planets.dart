@@ -1,5 +1,6 @@
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/oracowl.service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'drawer.menu.dart';
@@ -18,7 +19,7 @@ class TonightPlanets extends StatelessWidget {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('Pianeti'),
+              title: Text('planets').tr(),
               elevation: 0,
               centerTitle: true,
               backgroundColor: ThemeColors.secondaryColor),
@@ -63,33 +64,33 @@ class TonightPlanets extends StatelessWidget {
                                   Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
                                   SizedBox(height: 20),
                                   Text(
-                                    'Distanza dalla terra: ${_oracowlService.tonightPlanets[index]['earth_distance']} UA',
+                                    'distance_from_earth',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: ThemeColors.textColor
                                     ),
-                                  ),
+                                  ).tr(args: [_oracowlService.tonightPlanets[index]['earth_distance'].toString()]),
                                   Text(
-                                    'Sorge: ${_oracowlService.tonightPlanets[index]['rise_time']}',
+                                    'rise',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: ThemeColors.textColor
                                     ),
-                                  ),
+                                  ).tr(args: [_oracowlService.tonightPlanets[index]['rise_time'].toString()]),
                                   Text(
-                                    'Tramonta: ${_oracowlService.tonightPlanets[index]['set_time']}',
+                                    'set',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: ThemeColors.textColor
                                     ),
-                                  ),
+                                  ).tr(args: [_oracowlService.tonightPlanets[index]['set_time'].toString()]),
                                   Text(
-                                    'Massima altezza: ${_oracowlService.tonightPlanets[index]['max_altitude']}° (${_oracowlService.tonightPlanets[index]['max_altitude_time']})',
+                                    'transit',
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: ThemeColors.textColor
                                     ),
-                                  )
+                                  ).tr(args: [_oracowlService.tonightPlanets[index]['max_altitude'].toString(), _oracowlService.tonightPlanets[index]['max_altitude_time'].toString()])
                                 ],
                               ),
                             ),
@@ -99,12 +100,12 @@ class TonightPlanets extends StatelessWidget {
                                     Navigator.pop(context);
                                   },
                                   child: Text(
-                                    'Chiudi',
+                                    'close',
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: ThemeColors.textColor
                                     ),
-                                  )
+                                  ).tr()
                               )
                             ],
                           );

@@ -32,66 +32,96 @@ class _ForecastHourState extends State<ForecastHour> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget._weatherData['condition']['text']),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(
-                    Icons.cloud,
-                    color: ThemeColors.blackColor,
-                    size: 16,
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.cloud,
+                            color: ThemeColors.blackColor,
+                            size: 16,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${widget._weatherData['cloud']} %',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: ThemeColors.blackColor,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.umbrella,
+                            color: ThemeColors.secondaryColorDark,
+                            size: 16,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${widget._weatherData['precip_mm']} mm (${widget._weatherData['chance_of_rain']}%)',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: ThemeColors.secondaryColorDark,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    '${widget._weatherData['cloud']} %',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColors.blackColor,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.air,
+                            color: ThemeColors.textColorDark,
+                            size: 16,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${widget._weatherData['wind_kph']} km/h (${widget._weatherData['wind_dir']})',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: ThemeColors.textColorDark,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(width: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.opacity,
+                            color: ThemeColors.primaryColor,
+                            size: 16,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${widget._weatherData['humidity']} %',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: ThemeColors.primaryColor,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  Icon(
-                    Icons.umbrella,
-                    color: ThemeColors.secondaryColorDark,
-                    size: 16,
-                  ),
-                  Text(
-                    '${widget._weatherData['precip_mm']} mm (${widget._weatherData['chance_of_rain']}%)',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColors.secondaryColorDark,
-                    ),
-                  ),
-                  SizedBox(width: 5),
-                  Icon(
-                    Icons.air,
-                    color: ThemeColors.textColorDark,
-                    size: 16,
-                  ),
-                  Text(
-                    '${widget._weatherData['wind_kph']} km/h (${widget._weatherData['wind_dir']})',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColors.textColorDark,
-                    ),
-                  ),
-                  Icon(
-                    Icons.opacity,
-                    color: ThemeColors.primaryColor,
-                    size: 16,
-                  ),
-                  Text(
-                    '${widget._weatherData['humidity']} %',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColors.primaryColor,
-                    ),
-                  )
                 ],
               )
             ],
           ),
           leading: Container(
-            width: 85,
+            width: 95,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   height: 40,
@@ -117,10 +147,10 @@ class _ForecastHourState extends State<ForecastHour> {
                         )),
                   ),
                 ),
-                SizedBox(width: 5),
+                SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CircleAvatar(
                         radius: 15,
