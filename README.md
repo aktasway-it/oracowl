@@ -1,5 +1,7 @@
 # Oracowl
 
+![Oracowl Banner](https://astropills.it/wp-content/uploads/2021/07/banner.jpg.webp)
+
 Oracowl is an application written in Flutter that provides several tools to astrophotographers looking for an all-in-one 
 toolset application for planning their shooting sessions.
 
