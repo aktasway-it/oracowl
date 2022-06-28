@@ -23,7 +23,7 @@ class LocationService {
           }
         }
         this._currentLocation = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best);
+            desiredAccuracy: LocationAccuracy.medium);
         print(this._currentLocation.toString());
       }
     } catch (ex) {

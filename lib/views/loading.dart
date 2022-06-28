@@ -4,6 +4,7 @@ import 'package:astropills_tools/services/oracowl.service.dart';
 import 'package:astropills_tools/services/storage.service.dart';
 import 'package:astropills_tools/services/weather.service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -82,6 +83,7 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       loadData();
     });
