@@ -22,9 +22,13 @@ class TonightDSO extends StatelessWidget {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('deep_sky').tr(),
+              title: Text(
+                'deep_sky',
+                style: TextStyle(color: ThemeColors.textColor),
+              ).tr(),
               elevation: 0,
               centerTitle: true,
+              iconTheme: IconThemeData(color: ThemeColors.textColor),
               backgroundColor: ThemeColors.secondaryColor),
           drawer: DrawerMenu(),
           body: Container(
@@ -64,61 +68,85 @@ class TonightDSO extends StatelessWidget {
                               AlertDialog alert = AlertDialog(
                                 backgroundColor: ThemeColors.secondaryColorDark,
                                 title: Text(
-                                    '${_oracowlService.tonightDSO[index]['familiar_name']}',
+                                  '${_oracowlService.tonightDSO[index]['familiar_name']}',
                                   style: TextStyle(
-                                    color: ThemeColors.primaryColorLight
-                                  ),
+                                      color: ThemeColors.primaryColorLight),
                                 ),
                                 content: FittedBox(
                                   fit: BoxFit.fitHeight,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      CachedNetworkImage(imageUrl: _oracowlService.tonightDSO[index]['image_url']),
+                                      CachedNetworkImage(
+                                          imageUrl: _oracowlService
+                                              .tonightDSO[index]['image_url']),
                                       SizedBox(height: 20),
                                       Text(
                                         'magnitude',
                                         style: TextStyle(
-                                          fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['magnitude'].toString()]),
+                                            fontSize: 24,
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['magnitude']
+                                            .toString()
+                                      ]),
                                       Text(
-                                          'size',
+                                        'size',
                                         style: TextStyle(
                                             fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['size'].toString()]),
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['size']
+                                            .toString()
+                                      ]),
                                       Text(
-                                          'set_elevation',
+                                        'set_elevation',
                                         style: TextStyle(
                                             fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_at_sunset'].toString()]),
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['altitude_at_sunset']
+                                            .toString()
+                                      ]),
                                       Text(
-                                          'rise_elevation',
+                                        'rise_elevation',
                                         style: TextStyle(
                                             fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_at_sunrise'].toString()]),
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['altitude_at_sunrise']
+                                            .toString()
+                                      ]),
                                       Text(
-                                          'transit',
+                                        'transit',
                                         style: TextStyle(
                                             fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['altitude_max'].toString(), _oracowlService.tonightDSO[index]['transit'].toString()]),
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['altitude_max']
+                                            .toString(),
+                                        _oracowlService.tonightDSO[index]
+                                                ['transit']
+                                            .toString()
+                                      ]),
                                       Text(
-                                          'transit_time',
+                                        'transit_time',
                                         style: TextStyle(
                                             fontSize: 24,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr(args: [_oracowlService.tonightDSO[index]['transit'].toString()])
+                                            color: ThemeColors.textColor),
+                                      ).tr(args: [
+                                        _oracowlService.tonightDSO[index]
+                                                ['transit']
+                                            .toString()
+                                      ])
                                     ],
                                   ),
                                 ),
@@ -128,13 +156,11 @@ class TonightDSO extends StatelessWidget {
                                         Navigator.pop(context);
                                       },
                                       child: Text(
-                                          'close',
+                                        'close',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: ThemeColors.textColor
-                                        ),
-                                      ).tr()
-                                  ),
+                                            color: ThemeColors.textColor),
+                                      ).tr()),
                                   TextButton(
                                       onPressed: () {
                                         _openTelescopiusURL(
@@ -142,13 +168,12 @@ class TonightDSO extends StatelessWidget {
                                                 ['telescopius_url']);
                                       },
                                       child: Text(
-                                          'open_telescopius',
+                                        'open_telescopius',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: ThemeColors.interactiveColor
-                                        ),
-                                      ).tr()
-                                  )
+                                            color:
+                                                ThemeColors.interactiveColor),
+                                      ).tr())
                                 ],
                               );
                               showDialog(
@@ -166,7 +191,8 @@ class TonightDSO extends StatelessWidget {
                                   child: Text(
                                     '${_oracowlService.tonightDSO[index]['familiar_name']} (${_oracowlService.tonightDSO[index]['alias'].replaceAll('-', ' ')})',
                                     style: TextStyle(
-                                        color: ThemeColors.textColor, fontSize: 14),
+                                        color: ThemeColors.textColor,
+                                        fontSize: 14),
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
@@ -177,7 +203,8 @@ class TonightDSO extends StatelessWidget {
                                       fontSize: 10),
                                 ),
                                 SizedBox(height: 35),
-                                Divider(height: 10, color: ThemeColors.textColor),
+                                Divider(
+                                    height: 10, color: ThemeColors.textColor),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -263,6 +290,9 @@ class TonightDSO extends StatelessWidget {
   }
 
   void _openTelescopiusURL(String url) async {
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 }

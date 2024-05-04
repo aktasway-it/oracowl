@@ -26,19 +26,18 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     Image.asset('assets/icons/oracowl.png'),
                     Text(
                       'ORACOWL',
-                      style: TextStyle(fontSize: 24, color: ThemeColors.textColor),
+                      style:
+                          TextStyle(fontSize: 24, color: ThemeColors.textColor),
                     )
                   ],
                 ),
               ),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      ThemeColors.primaryColor, ThemeColors.secondaryColor
-                    ]
-                ),
-              )
-          ),
+                gradient: LinearGradient(colors: [
+                  ThemeColors.primaryColor,
+                  ThemeColors.secondaryColor
+                ]),
+              )),
           ListTile(
             title: Text('home').tr(),
             leading: Icon(Icons.home),
@@ -136,35 +135,54 @@ class _DrawerMenuState extends State<DrawerMenu> {
 
   void _openStellariumURL() async {
     final url = 'https://stellarium-web.org/';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openCalculatorsURL() async {
     final url = 'https://astronomy.tools/calculators/ccd';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openLunarCalendarURL() async {
     final lat = _locationService.position.latitude;
     final lon = _locationService.position.longitude;
     final url = 'https://www.timeanddate.com/moon/phases/@$lat,$lon';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openDarkSkyMapURL() async {
     final lat = _locationService.position.latitude;
     final lon = _locationService.position.longitude;
-    final url = 'https://www.lightpollutionmap.info/#zoom=10.00&lat=$lat&lon=$lon&layers=B0FFFFFFTFFFFFTFFFF';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final url =
+        'https://www.lightpollutionmap.info/#zoom=10.00&lat=$lat&lon=$lon&layers=B0FFFFFFTFFFFFTFFFF';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openYoutubeURL() async {
     final url = 'https://www.youtube.com/c/AstroPills';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openFeedbackURL() async {
     final url = 'mailto:astropills.it@gmail.com?subject=Feedback Oracowl';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 }

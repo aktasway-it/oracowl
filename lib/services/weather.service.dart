@@ -12,9 +12,8 @@ class WeatherService {
       {forceReload = false}) async {
     try {
       if (!isDataLoaded() || forceReload) {
-        String token = '0f8b0d0a304f460fbbb72025212705';
         String requestURI =
-            'https://api.weatherapi.com/v1/forecast.json?key=$token&q=$latitude,$longitude&days=3&lang=$locale';
+            'https://api2.oracowl.io/weather?lat=$latitude&lon=$longitude&lang=$locale';
         Response response = await get(Uri.parse(requestURI));
         this._data = WeatherData(response.body);
       }

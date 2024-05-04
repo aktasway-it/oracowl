@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(''),
+        iconTheme: IconThemeData(color: ThemeColors.textColor),
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
@@ -55,6 +56,7 @@ class _HomeState extends State<Home> {
               },
               child: Icon(
                 Icons.refresh,
+                color: ThemeColors.textColor,
               ),
             ),
           )
@@ -100,7 +102,8 @@ class _HomeState extends State<Home> {
                                   Text(
                                     _locationService.locationAsString,
                                     style: TextStyle(
-                                        fontSize: 10, color: ThemeColors.interactiveColor),
+                                        fontSize: 10,
+                                        color: ThemeColors.interactiveColor),
                                   ),
                                 ],
                               ),
@@ -135,23 +138,24 @@ class _HomeState extends State<Home> {
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: AssetImage(_weatherService
-                                                .weather.astronomy['moon_icon']),
+                                                .weather
+                                                .astronomy['moon_icon']),
                                             fit: BoxFit.fill)),
                                     child: Center(
                                       child: Text(
                                           '${_weatherService.weather.astronomy['moon_illumination']}%',
                                           style: TextStyle(
-                                            fontSize: 48,
-                                            fontWeight: FontWeight.bold,
-                                            color: ThemeColors.textColor,
-                                            shadows: [
-                                              Shadow(
-                                                offset: Offset(3.0, 3.0),
-                                                blurRadius: 3.0,
-                                                color: Color.fromARGB(32, 0, 0, 0),
-                                              ),
-                                            ]
-                                          )),
+                                              fontSize: 48,
+                                              fontWeight: FontWeight.bold,
+                                              color: ThemeColors.textColor,
+                                              shadows: [
+                                                Shadow(
+                                                  offset: Offset(3.0, 3.0),
+                                                  blurRadius: 3.0,
+                                                  color: Color.fromARGB(
+                                                      32, 0, 0, 0),
+                                                ),
+                                              ])),
                                     ),
                                   ),
                                 ),
@@ -160,7 +164,8 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      _weatherService.weather.astronomy['moonrise'],
+                                      _weatherService
+                                          .weather.astronomy['moonrise'],
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: ThemeColors.textColor,
@@ -177,7 +182,8 @@ class _HomeState extends State<Home> {
                                       size: 18,
                                     ),
                                     Text(
-                                      _weatherService.weather.astronomy['moonset'],
+                                      _weatherService
+                                          .weather.astronomy['moonset'],
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: ThemeColors.textColorDark,
@@ -193,33 +199,38 @@ class _HomeState extends State<Home> {
                                 InkWell(
                                   onTap: () {
                                     AlertDialog alert = AlertDialog(
-                                      backgroundColor: ThemeColors.secondaryColorDark,
+                                      backgroundColor:
+                                          ThemeColors.secondaryColorDark,
                                       title: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             'Owl Rank',
                                             style: TextStyle(
-                                                color: ThemeColors.primaryColorLight,
-                                                fontSize: 32
-                                            ),
+                                                color: ThemeColors
+                                                    .primaryColorLight,
+                                                fontSize: 32),
                                           ),
                                         ],
                                       ),
                                       content: FittedBox(
                                         fit: BoxFit.fitHeight,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Image.asset('assets/icons/owlrank.png', width: 150),
+                                            Image.asset(
+                                                'assets/icons/owlrank.png',
+                                                width: 150),
                                             SizedBox(height: 20),
                                             Text(
                                               'oracowl_rank_info',
                                               style: TextStyle(
                                                   fontSize: 18,
-                                                  color: ThemeColors.textColor
-                                              ),
+                                                  color: ThemeColors.textColor),
                                             ).tr(),
                                           ],
                                         ),
@@ -233,10 +244,8 @@ class _HomeState extends State<Home> {
                                               'close',
                                               style: TextStyle(
                                                   fontSize: 14,
-                                                  color: ThemeColors.textColor
-                                              ),
-                                            ).tr()
-                                        )
+                                                  color: ThemeColors.textColor),
+                                            ).tr())
                                       ],
                                     );
                                     showDialog(
@@ -251,23 +260,24 @@ class _HomeState extends State<Home> {
                                     width: 128,
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
-                                            image: AssetImage('assets/icons/owlrank.png'),
+                                            image: AssetImage(
+                                                'assets/icons/owlrank.png'),
                                             fit: BoxFit.fill)),
                                     child: Center(
                                       child: Text(
                                           _weatherService.weather.tonightRank,
                                           style: TextStyle(
-                                            fontSize: 48,
-                                            fontWeight: FontWeight.bold,
-                                            color: ThemeColors.textColor,
+                                              fontSize: 48,
+                                              fontWeight: FontWeight.bold,
+                                              color: ThemeColors.textColor,
                                               shadows: [
                                                 Shadow(
                                                   offset: Offset(3.0, 3.0),
                                                   blurRadius: 3.0,
-                                                  color: Color.fromARGB(64, 0, 0, 0),
+                                                  color: Color.fromARGB(
+                                                      64, 0, 0, 0),
                                                 ),
-                                              ]
-                                          )),
+                                              ])),
                                     ),
                                   ),
                                 ),
@@ -301,16 +311,19 @@ class _HomeState extends State<Home> {
                             Row(children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.pushReplacementNamed(context, '/forecast');
+                                    Navigator.pushReplacementNamed(
+                                        context, '/forecast');
                                   },
                                   child: CachedNetworkImage(
                                       imageUrl:
                                           'https:${_weatherService.weather.currentWeather['condition']['icon']}')),
                               Flexible(
                                 child: Text(
-                                  _weatherService.weather.currentWeather['condition']['text'],
+                                  _weatherService.weather
+                                      .currentWeather['condition']['text'],
                                   style: TextStyle(
-                                      fontSize: 14, color: ThemeColors.textColor),
+                                      fontSize: 14,
+                                      color: ThemeColors.textColor),
                                 ),
                               )
                             ])
@@ -431,13 +444,19 @@ class _HomeState extends State<Home> {
     final lat = _locationService.position.latitude;
     final lon = _locationService.position.longitude;
     final url = 'https://www.timeanddate.com/moon/phases/@$lat,$lon';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 
   void _openGoogleMapsURL() async {
     final lat = _locationService.position.latitude;
     final lon = _locationService.position.longitude;
     final url = 'https://www.google.com/maps/@$lat,$lon,13z';
-    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $url';
   }
 }

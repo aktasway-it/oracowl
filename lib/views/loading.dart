@@ -38,13 +38,6 @@ class _LoadingState extends State<Loading> {
     bool oracowlLoaded = await _oracowlService.loadData(
         _locationService.position.latitude, _locationService.position.longitude,
         forceReload: true);
-    if (!oracowlLoaded) {
-      oracowlLoaded = await _oracowlService.loadData(
-          _locationService.position.latitude,
-          _locationService.position.longitude,
-          forceReload: true,
-          backupService: true);
-    }
     bool weatherLoaded = await _weatherService.loadForecast(
         _locationService.position.latitude,
         _locationService.position.longitude,

@@ -19,9 +19,12 @@ class TonightPlanets extends StatelessWidget {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('planets').tr(),
+              title: Text('planets',
+                      style: TextStyle(color: ThemeColors.textColor))
+                  .tr(),
               elevation: 0,
               centerTitle: true,
+              iconTheme: IconThemeData(color: ThemeColors.textColor),
               backgroundColor: ThemeColors.secondaryColor),
           drawer: DrawerMenu(),
           body: Container(
@@ -39,7 +42,8 @@ class TonightPlanets extends StatelessWidget {
                     itemCount: _oracowlService.tonightPlanets.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
+                        leading: Image.asset(
+                            'assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
                         onTap: () {
                           AlertDialog alert = AlertDialog(
                             backgroundColor: ThemeColors.secondaryColorDark,
@@ -50,8 +54,7 @@ class TonightPlanets extends StatelessWidget {
                                   _oracowlService.tonightPlanets[index]['name'],
                                   style: TextStyle(
                                       color: ThemeColors.primaryColorLight,
-                                      fontSize: 32
-                                  ),
+                                      fontSize: 32),
                                 ),
                               ],
                             ),
@@ -59,38 +62,55 @@ class TonightPlanets extends StatelessWidget {
                               fit: BoxFit.fitHeight,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Image.asset('assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
+                                  Image.asset(
+                                      'assets/icons/planets/${_oracowlService.tonightPlanets[index]['name']}.png'),
                                   SizedBox(height: 20),
                                   Text(
                                     'distance_from_earth',
                                     style: TextStyle(
                                         fontSize: 18,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ).tr(args: [_oracowlService.tonightPlanets[index]['earth_distance'].toString()]),
+                                        color: ThemeColors.textColor),
+                                  ).tr(args: [
+                                    _oracowlService.tonightPlanets[index]
+                                            ['earth_distance']
+                                        .toString()
+                                  ]),
                                   Text(
                                     'rise',
                                     style: TextStyle(
                                         fontSize: 18,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ).tr(args: [_oracowlService.tonightPlanets[index]['rise_time'].toString()]),
+                                        color: ThemeColors.textColor),
+                                  ).tr(args: [
+                                    _oracowlService.tonightPlanets[index]
+                                            ['rise_time']
+                                        .toString()
+                                  ]),
                                   Text(
                                     'set',
                                     style: TextStyle(
                                         fontSize: 18,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ).tr(args: [_oracowlService.tonightPlanets[index]['set_time'].toString()]),
+                                        color: ThemeColors.textColor),
+                                  ).tr(args: [
+                                    _oracowlService.tonightPlanets[index]
+                                            ['set_time']
+                                        .toString()
+                                  ]),
                                   Text(
                                     'transit',
                                     style: TextStyle(
                                         fontSize: 18,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ).tr(args: [_oracowlService.tonightPlanets[index]['max_altitude'].toString(), _oracowlService.tonightPlanets[index]['max_altitude_time'].toString()])
+                                        color: ThemeColors.textColor),
+                                  ).tr(args: [
+                                    _oracowlService.tonightPlanets[index]
+                                            ['max_altitude']
+                                        .toString(),
+                                    _oracowlService.tonightPlanets[index]
+                                            ['max_altitude_time']
+                                        .toString()
+                                  ])
                                 ],
                               ),
                             ),
@@ -103,10 +123,8 @@ class TonightPlanets extends StatelessWidget {
                                     'close',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color: ThemeColors.textColor
-                                    ),
-                                  ).tr()
-                              )
+                                        color: ThemeColors.textColor),
+                                  ).tr())
                             ],
                           );
                           showDialog(
@@ -117,7 +135,7 @@ class TonightPlanets extends StatelessWidget {
                           );
                         },
                         title: Text(
-                            _oracowlService.tonightPlanets[index]['name'],
+                          _oracowlService.tonightPlanets[index]['name'],
                           style: TextStyle(
                             fontSize: 20,
                             color: ThemeColors.interactiveColor,
@@ -134,9 +152,7 @@ class TonightPlanets extends StatelessWidget {
                             Text(
                               '${_oracowlService.tonightPlanets[index]['earth_distance']} AU',
                               style: TextStyle(
-                                  color: ThemeColors.textColor,
-                                  fontSize: 10
-                              ),
+                                  color: ThemeColors.textColor, fontSize: 10),
                             ),
                             Icon(
                               Icons.upgrade,
@@ -146,9 +162,7 @@ class TonightPlanets extends StatelessWidget {
                             Text(
                               '${_oracowlService.tonightPlanets[index]['rise_time']}',
                               style: TextStyle(
-                                  color: ThemeColors.textColor,
-                                  fontSize: 10
-                              ),
+                                  color: ThemeColors.textColor, fontSize: 10),
                             ),
                             Icon(
                               Icons.vertical_align_bottom,
@@ -158,9 +172,7 @@ class TonightPlanets extends StatelessWidget {
                             Text(
                               '${_oracowlService.tonightPlanets[index]['set_time']}°',
                               style: TextStyle(
-                                  color: ThemeColors.textColor,
-                                  fontSize: 10
-                              ),
+                                  color: ThemeColors.textColor, fontSize: 10),
                             ),
                             Icon(
                               Icons.height,
@@ -170,9 +182,7 @@ class TonightPlanets extends StatelessWidget {
                             Text(
                               '${_oracowlService.tonightPlanets[index]['max_altitude']}° (${_oracowlService.tonightPlanets[index]['max_altitude_time']})',
                               style: TextStyle(
-                                  color: ThemeColors.textColor,
-                                  fontSize: 10
-                              ),
+                                  color: ThemeColors.textColor, fontSize: 10),
                             ),
                           ],
                         ),

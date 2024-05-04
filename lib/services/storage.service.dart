@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:localstorage/localstorage.dart';
 
@@ -15,7 +16,7 @@ class StorageService {
     try {
       dynamic value = localStorage.getItem(key);
       if (value != null) {
-        return value;
+        return json.decode(value);
       } else {
         return defaultValue;
       }
@@ -25,6 +26,6 @@ class StorageService {
   }
 
   void setData(String key, dynamic value) {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, json.encode(value));
   }
 }

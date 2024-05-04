@@ -6,7 +6,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class LocationPicker extends StatefulWidget {
   const LocationPicker();
 
@@ -37,9 +36,13 @@ class _LocationPickerState extends State<LocationPicker> {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-              title: Text('pick_location').tr(),
+              title: Text(
+                'pick_location',
+                style: TextStyle(color: ThemeColors.textColor),
+              ).tr(),
               elevation: 0,
               centerTitle: true,
+              iconTheme: IconThemeData(color: ThemeColors.textColor),
               backgroundColor: ThemeColors.secondaryColor),
           body: Container(
               child: Stack(children: [
@@ -63,7 +66,8 @@ class _LocationPickerState extends State<LocationPicker> {
                           style: TextStyle(color: ThemeColors.textColor),
                           decoration: InputDecoration(
                               labelText: 'location_name'.tr(),
-                              labelStyle: TextStyle(color: ThemeColors.primaryColor)),
+                              labelStyle:
+                                  TextStyle(color: ThemeColors.primaryColor)),
                           keyboardType: TextInputType.text,
                         ),
                         Row(
@@ -74,8 +78,10 @@ class _LocationPickerState extends State<LocationPicker> {
                                 style: TextStyle(color: ThemeColors.textColor),
                                 decoration: InputDecoration(
                                     labelText: 'latitude'.tr(),
-                                    labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                    labelStyle: TextStyle(
+                                        color: ThemeColors.primaryColor)),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                               ),
                             ),
                             SizedBox(width: 20),
@@ -85,8 +91,10 @@ class _LocationPickerState extends State<LocationPicker> {
                                 style: TextStyle(color: ThemeColors.textColor),
                                 decoration: InputDecoration(
                                     labelText: 'longitude'.tr(),
-                                    labelStyle: TextStyle(color: ThemeColors.primaryColor)),
-                                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                    labelStyle: TextStyle(
+                                        color: ThemeColors.primaryColor)),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
                               ),
                             ),
                           ],
@@ -97,35 +105,44 @@ class _LocationPickerState extends State<LocationPicker> {
                             TextButton(
                                 onPressed: () {
                                   try {
-                                    final locationName = _formKey
-                                        .currentState!.fields['locationName']!.value.trim();
+                                    final locationName = _formKey.currentState!
+                                        .fields['locationName']!.value
+                                        .trim();
                                     if (locationName == '') {
                                       throw Exception();
                                     }
                                     final latitude = double.parse(_formKey
-                                        .currentState!.fields['latitude']!.value);
+                                        .currentState!
+                                        .fields['latitude']!
+                                        .value);
                                     final longitude = double.parse(_formKey
-                                        .currentState!.fields['longitude']!.value);
+                                        .currentState!
+                                        .fields['longitude']!
+                                        .value);
 
                                     _savedLocations.add({
                                       'name': locationName,
                                       'latitude': latitude,
                                       'longitude': longitude
                                     });
-                                    _storageService.setData('saved-locations', _savedLocations);
+                                    _storageService.setData(
+                                        'saved-locations', _savedLocations);
                                     _locationService.createPositionFromLatLon(
                                         latitude, longitude);
-                                    Navigator.pushReplacementNamed(context, '/');
-                                  } catch(ex) {
+                                    Navigator.pushReplacementNamed(
+                                        context, '/');
+                                  } catch (ex) {
+                                    print('!!!!!!!! ERROR: ');
+                                    print(ex.toString());
                                     Fluttertoast.showToast(
                                         msg: "insert_valid_location".tr(),
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
-                                        backgroundColor: ThemeColors.secondaryColor,
+                                        backgroundColor:
+                                            ThemeColors.secondaryColor,
                                         textColor: ThemeColors.textColor,
-                                        fontSize: 16.0
-                                    );
+                                        fontSize: 16.0);
                                   }
                                 },
                                 child: Row(
@@ -134,16 +151,19 @@ class _LocationPickerState extends State<LocationPicker> {
                                     SizedBox(width: 10),
                                     Text(
                                       'save',
-                                      style: TextStyle(color: ThemeColors.interactiveColor),
+                                      style: TextStyle(
+                                          color: ThemeColors.interactiveColor),
                                     ).tr(),
                                   ],
                                 )),
                             TextButton(
                                 onPressed: () async {
                                   _locationService.flushPosition();
-                                  bool hasPermission = await _locationService.hasPermission();
+                                  bool hasPermission =
+                                      await _locationService.hasPermission();
                                   if (hasPermission) {
-                                    Navigator.pushReplacementNamed(context, '/');
+                                    Navigator.pushReplacementNamed(
+                                        context, '/');
                                   } else {
                                     _locationService.openSettings();
                                   }
@@ -154,7 +174,8 @@ class _LocationPickerState extends State<LocationPicker> {
                                     SizedBox(width: 10),
                                     Text(
                                       'use_gps',
-                                      style: TextStyle(color: ThemeColors.interactiveColor),
+                                      style: TextStyle(
+                                          color: ThemeColors.interactiveColor),
                                     ).tr(),
                                   ],
                                 )),
@@ -165,35 +186,39 @@ class _LocationPickerState extends State<LocationPicker> {
                   ),
                 ),
                 Divider(height: 40, color: ThemeColors.textColor),
-                Text(
-                    'saved_locations',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: ThemeColors.textColor,
-                  )
-                ).tr(),
-                SizedBox(height: 20,),
+                Text('saved_locations',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: ThemeColors.textColor,
+                    )).tr(),
+                SizedBox(
+                  height: 20,
+                ),
                 Expanded(
                   child: Container(
                       padding: EdgeInsets.fromLTRB(5, 0, 5, 10),
                       child: ListView.builder(
-                        padding: EdgeInsets.zero,
+                          padding: EdgeInsets.zero,
                           itemCount: _savedLocations.length,
                           itemBuilder: (context, index) {
                             return Card(
                               child: ListTile(
                                 tileColor: ThemeColors.primaryColor,
                                 leading: TextButton(
-                                  child: Icon(Icons.delete, size: 36, color: ThemeColors.secondaryColor),
+                                  child: Icon(Icons.delete,
+                                      size: 36,
+                                      color: ThemeColors.secondaryColor),
                                   onPressed: () {
                                     _savedLocations.removeAt(index);
-                                    _storageService.setData('saved-locations', _savedLocations);
+                                    _storageService.setData(
+                                        'saved-locations', _savedLocations);
                                     setState(() {});
                                   },
                                 ),
                                 onTap: () {
                                   _locationService.createPositionFromLatLon(
-                                      _savedLocations[index]['latitude'], _savedLocations[index]['longitude']);
+                                      _savedLocations[index]['latitude'],
+                                      _savedLocations[index]['longitude']);
                                   Navigator.pushReplacementNamed(context, '/');
                                 },
                                 title: Text(
@@ -210,23 +235,20 @@ class _LocationPickerState extends State<LocationPicker> {
                                       'Lat: ${_savedLocations[index]['latitude']}',
                                       style: TextStyle(
                                           color: ThemeColors.textColor,
-                                          fontSize: 12
-                                      ),
+                                          fontSize: 12),
                                     ),
                                     SizedBox(width: 10),
                                     Text(
                                       'Lon: ${_savedLocations[index]['longitude']}',
                                       style: TextStyle(
                                           color: ThemeColors.textColor,
-                                          fontSize: 12
-                                      ),
+                                          fontSize: 12),
                                     ),
                                   ],
                                 ),
                               ),
                             );
-                          })
-                  ),
+                          })),
                 )
               ],
             )

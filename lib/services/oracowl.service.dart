@@ -7,13 +7,13 @@ class OracowlService {
   OracowlService._internal();
 
   OracowlData _data = OracowlData.empty();
-  Future<bool> loadData(double latitude, double longitude, {forceReload = false, backupService = false}) async {
+  Future<bool> loadData(double latitude, double longitude,
+      {forceReload = false}) async {
     try {
       if (!isDataLoaded() || forceReload) {
         int timeOffset = DateTime.now().timeZoneOffset.inSeconds;
-        String requestURI = backupService ?
-        'https://api.oracowl.astropills.it:5002/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset'
-            : 'https://api.oracowl.io:5000/api/mobile/tonight?lat=$latitude&lon=$longitude&to=$timeOffset';
+        String requestURI =
+            'https://api2.oracowl.io/ap/tonight?lat=$latitude&lon=$longitude&tz=$timeOffset';
         Response response = await get(Uri.parse(requestURI));
         this._data = OracowlData(response.body);
       }
