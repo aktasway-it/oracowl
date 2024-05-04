@@ -7,9 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:astropills_tools/core/theme.colors.dart';
 import 'package:astropills_tools/services/weather.service.dart';
-import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -29,7 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       String locale = context.locale.toStringWithSeparator();
       Intl.defaultLocale = locale;
       initializeDateFormatting(locale, null).then((value) {

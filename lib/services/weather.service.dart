@@ -1,4 +1,3 @@
-import 'package:astropills_tools/core/secrets.dart';
 import 'package:astropills_tools/models/weather.data.dart';
 import 'package:http/http.dart';
 
@@ -9,11 +8,13 @@ class WeatherService {
 
   WeatherData _data = WeatherData.empty();
 
-  Future<bool> loadForecast(double latitude, double longitude, String locale, {forceReload = false}) async {
+  Future<bool> loadForecast(double latitude, double longitude, String locale,
+      {forceReload = false}) async {
     try {
       if (!isDataLoaded() || forceReload) {
-        String token = Secrets.weatherAPIToken;
-        String requestURI = 'https://api.weatherapi.com/v1/forecast.json?key=$token&q=$latitude,$longitude&days=3&lang=$locale';
+        String token = '0f8b0d0a304f460fbbb72025212705';
+        String requestURI =
+            'https://api.weatherapi.com/v1/forecast.json?key=$token&q=$latitude,$longitude&days=3&lang=$locale';
         Response response = await get(Uri.parse(requestURI));
         this._data = WeatherData(response.body);
       }

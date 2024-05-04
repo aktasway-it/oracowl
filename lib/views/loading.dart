@@ -9,7 +9,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class Loading extends StatefulWidget {
   const Loading();
 
@@ -29,20 +28,27 @@ class _LoadingState extends State<Loading> {
       _showReload = false;
     });
     String locale = context.locale.toString();
-    bool positionLoaded =
-        await _locationService.fetchCurrentLocation();
+    bool positionLoaded = await _locationService.fetchCurrentLocation();
     if (!positionLoaded) {
       showLocationToast();
       Navigator.pushReplacementNamed(context, '/location');
       return;
     }
-    bool oracowlLoaded = await _oracowlService.loadData(_locationService.position.latitude, _locationService.position.longitude,
+    await _storageService.init();
+    bool oracowlLoaded = await _oracowlService.loadData(
+        _locationService.position.latitude, _locationService.position.longitude,
         forceReload: true);
     if (!oracowlLoaded) {
-      oracowlLoaded = await _oracowlService.loadData(_locationService.position.latitude, _locationService.position.longitude,
-          forceReload: true, backupService: true);
+      oracowlLoaded = await _oracowlService.loadData(
+          _locationService.position.latitude,
+          _locationService.position.longitude,
+          forceReload: true,
+          backupService: true);
     }
-    bool weatherLoaded = await _weatherService.loadForecast(_locationService.position.latitude, _locationService.position.longitude, locale,
+    bool weatherLoaded = await _weatherService.loadForecast(
+        _locationService.position.latitude,
+        _locationService.position.longitude,
+        locale,
         forceReload: true);
     if (oracowlLoaded && weatherLoaded) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -53,14 +59,14 @@ class _LoadingState extends State<Loading> {
 
   showLocationToast() {
     Fluttertoast.showToast(
-        msg: "Oracowl ha bisogno di poter accedere alla tua posizione per caricare automaticamente i dati.",
+        msg:
+            "Oracowl ha bisogno di poter accedere alla tua posizione per caricare automaticamente i dati.",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor: ThemeColors.secondaryColor,
         textColor: ThemeColors.textColor,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
     setState(() {
       _showReload = true;
     });
@@ -74,8 +80,7 @@ class _LoadingState extends State<Loading> {
         timeInSecForIosWeb: 1,
         backgroundColor: ThemeColors.secondaryColor,
         textColor: ThemeColors.textColor,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
     setState(() {
       _showReload = true;
     });
@@ -84,7 +89,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       loadData();
     });
     super.initState();
@@ -101,30 +106,25 @@ class _LoadingState extends State<Loading> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset('assets/icons/oracowl.png'),
-                Text(
-                  'ORACOWL',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: ThemeColors.textColor
-                  )
-                ),
-                !_showReload ? SpinKitRipple(
-                  color: ThemeColors.textColor,
-                  size: 50.0,
-                ) : TextButton(
-                    onPressed: () {
-                      loadData();
-                    },
-                    child: Text(
-                        'Ricarica',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: ThemeColors.interactiveColor
-                        )
-                    )
-                )
+                Text('ORACOWL',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: ThemeColors.textColor)),
+                !_showReload
+                    ? SpinKitRipple(
+                        color: ThemeColors.textColor,
+                        size: 50.0,
+                      )
+                    : TextButton(
+                        onPressed: () {
+                          loadData();
+                        },
+                        child: Text('Ricarica',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: ThemeColors.interactiveColor)))
               ],
             ),
           ),

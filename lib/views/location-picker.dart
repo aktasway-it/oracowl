@@ -6,7 +6,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'drawer.menu.dart';
 
 class LocationPicker extends StatefulWidget {
   const LocationPicker();

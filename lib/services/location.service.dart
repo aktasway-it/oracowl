@@ -34,7 +34,8 @@ class LocationService {
 
   Future<bool> hasPermission() async {
     LocationPermission permission = await Geolocator.requestPermission();
-    return permission != LocationPermission.denied && permission != LocationPermission.deniedForever;
+    return permission != LocationPermission.denied &&
+        permission != LocationPermission.deniedForever;
   }
 
   void openSettings() {
@@ -46,16 +47,10 @@ class LocationService {
   }
 
   String get locationAsString {
-    if (_currentLocation == null) {
-      return 'N/A';
-    }
     return '${_currentLocation.latitude.toStringAsFixed(4)}, ${_currentLocation.longitude.toStringAsFixed(4)}';
   }
 
   int get altitude {
-    if (_currentLocation == null) {
-      return 0;
-    }
     return _currentLocation.altitude.round();
   }
 
@@ -70,9 +65,11 @@ class LocationService {
         timestamp: DateTime.now(),
         accuracy: 0,
         altitude: 0,
+        altitudeAccuracy: 50,
         heading: 0,
         speed: 0,
-        speedAccuracy: 0);
+        speedAccuracy: 0,
+        headingAccuracy: 0);
 
     this._manuallySet = true;
   }
