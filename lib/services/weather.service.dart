@@ -13,7 +13,7 @@ class WeatherService {
     try {
       if (!isDataLoaded() || forceReload) {
         String requestURI =
-            'https://api2.oracowl.io/weather?lat=$latitude&lon=$longitude&lang=$locale';
+            'https://api.oracowl.io/weather?lat=$latitude&lon=$longitude&lang=$locale';
         Response response = await get(Uri.parse(requestURI));
         this._data = WeatherData(response.body);
       }

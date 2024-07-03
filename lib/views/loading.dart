@@ -35,14 +35,18 @@ class _LoadingState extends State<Loading> {
       return;
     }
     await _storageService.init();
-    bool oracowlLoaded = await _oracowlService.loadData(
-        _locationService.position.latitude, _locationService.position.longitude,
-        forceReload: true);
-    bool weatherLoaded = await _weatherService.loadForecast(
-        _locationService.position.latitude,
-        _locationService.position.longitude,
-        locale,
-        forceReload: true);
+    List<bool> li = await Future.wait<bool>([
+      _oracowlService.loadData(_locationService.position.latitude,
+          _locationService.position.longitude,
+          forceReload: true),
+      _weatherService.loadForecast(_locationService.position.latitude,
+          _locationService.position.longitude, locale,
+          forceReload: true),
+    ]);
+
+    bool oracowlLoaded = li[0];
+    bool weatherLoaded = li[1];
+
     if (oracowlLoaded && weatherLoaded) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
